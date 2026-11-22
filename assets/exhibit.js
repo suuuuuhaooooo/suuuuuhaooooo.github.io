@@ -128,7 +128,7 @@ window.SUHAO_openSheet = openSheet;   // 3D 展廳（gallery3d.js）點作品時
 
 /* ================= 其他：浮現、導覽列、展間指示 ================= */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .2 });
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
+document.querySelectorAll('.rv, #sayhi').forEach(el => io.observe(el));
 const nav = document.getElementById('nav'), whereN = document.getElementById('whereN'), rooms = [...document.querySelectorAll('[data-room]')], darkEl = document.getElementById('dark');
 function onScroll() {
   const d = darkEl.getBoundingClientRect(); nav.classList.toggle('dark', d.top < 60 && d.bottom > 60);

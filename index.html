@@ -82,6 +82,11 @@ html.loading .entry .over{opacity:0}
 .status .cats{flex-basis:100%;letter-spacing:.14em}
 .status .cats::before{display:none}
 .entry .cue{position:absolute;left:0;right:0;bottom:calc(30% - 10px);text-align:center;font-size:10px;letter-spacing:.3em;color:var(--sub);display:none}
+.sayhi .w{display:inline-block;opacity:0;transition:opacity 1.4s ease,transform 1.8s cubic-bezier(.16,.8,.2,1)}
+.sayhi .w-l{transform:translateX(-45vw)}
+.sayhi .w-r{transform:translateX(45vw);transition-delay:.15s}
+.sayhi.in .w{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.sayhi .w{opacity:1;transform:none}}
 .sayhi{font-family:var(--sans)!important;font-weight:500!important;font-size:clamp(64px,15vw,190px)!important;letter-spacing:-.02em!important;line-height:1!important}
 .exit .thanks{color:var(--sub);margin-top:20px;font-size:15px;letter-spacing:.06em}
 .hi{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--fg);margin-top:56px;text-align:left}
@@ -193,7 +198,7 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
 .darkroom .glow{position:absolute;left:var(--x,50%);top:var(--y,50%);width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:1px solid rgba(255,255,255,.5);pointer-events:none;transition:opacity .4s}
 
 /* ---------- 展間 III：參觀資訊 ---------- */
-.visit{padding:18vh 0 14vh}
+.visit{padding:18vh 0 14vh;padding:18svh 0 14svh}
 .vtable{margin-top:10px}
 .vrow{display:grid;grid-template-columns:200px 1fr auto;gap:24px;align-items:baseline;border-bottom:1px solid var(--line);padding:26px 0;transition:padding .4s}
 .vrow:hover{padding-left:10px}
@@ -204,7 +209,7 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
 @media (max-width:680px){.vrow{grid-template-columns:1fr auto;gap:6px 14px}.vrow .k{grid-column:1/-1}}
 
 /* ---------- 出口 ---------- */
-.exit{padding:16vh 0 18vh;text-align:center;border-top:1px solid var(--line)}
+.exit{padding:16vh 0 18vh;padding:16svh 0 18svh;text-align:center;border-top:1px solid var(--line);overflow:hidden}
 .exit p.label{margin-bottom:24px}
 .exit h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,7vw,84px);letter-spacing:.08em;line-height:1.3}
 .exit .row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:44px}
@@ -363,7 +368,7 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
 <section class="exit" id="hi" data-room="出口">
   <div class="wrap">
     <p class="label rv">04 · EXIT</p>
-    <h2 class="rv d1 sayhi">SAY HI.</h2>
+    <h2 class="sayhi" id="sayhi"><span class="w w-l">SAY</span> <span class="w w-r">HI.</span></h2>
     <p class="rv d1 thanks">謝謝你來看展。課程、時段、題目，都可以直接問我。</p>
     <div class="hi rv d2">
       <a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener"><span class="label">預約・問題</span><b>官方 LINE</b><i class="arrow"></i></a>

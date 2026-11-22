@@ -240,7 +240,11 @@ addEventListener('resize', size); size();
 let look2 = [0, 0], cz = Z0 - 1.5, yaw = 0, pitch = 0, active = false, lastNear = -2;
 addEventListener('pointermove', e => { if (e.pointerType === 'mouse') look2 = [(e.clientX / innerWidth - .5) * 2, (e.clientY / innerHeight - .5) * 2]; });
 new IntersectionObserver(es => active = es[0].isIntersecting).observe(sec);
-sec.style.height = `calc(100vh + ${W.length * 115 + 120}vh)`;     // 作品越多，走廊越長
+// 作品越多，走廊越長。用「載入時的螢幕高度」換成固定 px，只有寬度改變（轉向）才重算：
+// 手機網址列收合會讓 vh 變動，走廊有 8 個螢幕高，乘上去後下面的區塊就會跳來跳去
+let lenW = 0;
+function setLen() { if (innerWidth === lenW) return; lenW = innerWidth; sec.style.height = Math.round(innerHeight * (1 + (W.length * 115 + 120) / 100)) + 'px'; }
+setLen(); addEventListener('resize', setLen);
 
 const $ = id => document.getElementById(id);
 const gnow = $('gnow'), gnowN = $('gnowN'), gnowT = $('gnowT'), gbar = $('gbar'), gcnt = $('gcnt'), ghead = $('ghead');
