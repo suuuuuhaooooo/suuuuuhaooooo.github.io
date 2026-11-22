@@ -12,9 +12,15 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#fbfbf9">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="author" content="蘇昊">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="蘇昊數理">
 <meta property="og:title" content="專欄｜蘇昊數理">
+<meta property="og:description" content="教學現場的觀察、讀書方法、時事裡的自然科學。">
+<meta property="og:url" content="https://suuuuuhaooooo.github.io/articles.html">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://suuuuuhaooooo.github.io/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
@@ -44,12 +50,13 @@
 @media (max-width:760px){.card.big{grid-template-columns:1fr;gap:0}}
 @keyframes up{to{opacity:1;transform:none}}
 .empty{padding:80px 0 140px;font-family:var(--serif);font-size:22px;color:var(--sub);letter-spacing:.08em}
+.nav .links em{font-family:var(--serif);font-style:italic;color:var(--sub);margin-right:3px}
 </style>
 </head>
 <body>
 <nav class="nav"><div class="wrap">
   <a class="brand" href="./" aria-label="蘇昊數理 首頁"><span class="logo sm" data-text="蘇昊數理"></span></a>
-  <div class="links"><a href="./#room1">作品</a><a href="articles.html">專欄</a><a href="./#visit">參觀資訊</a></div>
+  <div class="links"><a href="./#room1"><em>01</em> 作品</a><a href="articles.html"><em>02</em> 專欄</a><a href="./#visit"><em>03</em> 參觀資訊</a><a href="./#hi"><em>04</em> 聯絡</a></div>
   <a class="pill" href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener">預約試教</a>
 </div></nav>
 
@@ -72,6 +79,7 @@
 <script src="assets/config.js"></script>
 <script src="assets/logo.js"></script>
 <script src="assets/protect.js"></script>
+<script src="assets/menu.js"></script>
 <script>
 (async function () {
   const C = window.SUHAO, grid = document.getElementById('grid'), tagsEl = document.getElementById('tags'), q = document.getElementById('q');

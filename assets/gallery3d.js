@@ -157,8 +157,10 @@ for (let i = 0; i < W.length; i++) {
 
 /* ---------- 展台與立體作品：原子模型 ---------- */
 const atom = new THREE.Group();
+const OBST = [];   // 走道中間的東西（展台、長椅），鏡頭要繞過去
 {
   const pz = FIRST - GAP * Math.min(2.5, (W.length - 1) / 2);
+  OBST.push({ z: pz, side: 1, look: true });     // 從展台右邊繞過，邊走邊看原子模型
   const ped = new THREE.Mesh(new THREE.BoxGeometry(.7, 1.05, .7), mat('#f7f6f2', { roughness: .6 }));
   ped.position.set(0, .525, pz); ped.castShadow = ped.receiveShadow = true; scene.add(ped);
   atom.position.set(0, 1.62, pz); scene.add(atom);
@@ -183,6 +185,7 @@ const atom = new THREE.Group();
   // 長椅
   const bz = pz - GAP * 1.6;
   if (bz > Z1 + 4) {
+    OBST.push({ z: bz, side: -1, look: false });  // 長椅從左邊繞過
     const wood = mat('#3a2f25', { roughness: .55 });
     const seat = new THREE.Mesh(new THREE.BoxGeometry(.6, .08, 2.2), wood); seat.position.set(0, .45, bz); seat.castShadow = true; scene.add(seat);
     [-1, 1].forEach(s => { const leg = new THREE.Mesh(new THREE.BoxGeometry(.5, .42, .06), trackMat); leg.position.set(0, .21, bz + s * .95); scene.add(leg); });
@@ -255,8 +258,11 @@ function frame() {
   W.forEach((k, i) => { const z = FIRST - i * GAP, side = i % 2 ? 1 : -1, w = Math.exp(-Math.pow(cz - (z + 2.4), 2) / 3.4);
     ty += side * .95 * w; if (w > best) { best = w; near = i; } });
   if (best < .45) near = -1;
+  // 繞開走道中間的展台、長椅：越接近越往旁邊偏
+  let ox = 0;
+  OBST.forEach(o => { const w = Math.exp(-Math.pow(cz - o.z, 2) / (2 * 1.7 * 1.7)); ox += o.side * 1.6 * w; if (o.look) ty -= o.side * .5 * w; });
   ty += look2[0] * .16; yaw += (ty - yaw) * .06; pitch += (-look2[1] * .07 - pitch) * .06;
-  cam.position.set(Math.sin(yaw * .5) * .55, 1.62 + Math.sin(cz * 1.7) * .012, cz);
+  cam.position.set(ox + Math.sin(yaw * .5) * .4, 1.62 + Math.sin(cz * 1.7) * .012, cz);
   cam.lookAt(cam.position.x + Math.sin(yaw), cam.position.y + pitch, cam.position.z - Math.cos(yaw));
 
   // 原子模型

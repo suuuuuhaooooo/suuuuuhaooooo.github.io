@@ -1,7 +1,7 @@
 /* Markdown → 文章 HTML。前台 article.html 和後台預覽共用，所以兩邊長得一樣。
    除了一般 Markdown，還支援「時事 × 自然」專欄用的幾種寫法：
    $公式$、$$獨立公式$$
-   > [!先猜] 問題        → 先猜卡（答案要按才會打開）
+   > [!先猜] 問題        → 先猜卡（答案要按才會打開；有「答案：」那行時，上面全部當題目）
    > [!注意] 文字        → 提醒框
    {官方} {報導} {訪談} {推估} {假設} → 證據等級標籤
    ```lab   …HTML…  ```   → 互動實驗（在隔離的小視窗裡執行）
@@ -30,9 +30,11 @@ window.renderArticle = function (el, md) {
     const m = first.innerHTML.match(/^\s*\[!(先猜|注意)\]\s*/); if (!m) return;
     first.innerHTML = first.innerHTML.slice(m[0].length);
     if (m[1] === '注意') { bq.className = 'note'; return; }
-    // 第一段的第一行是問題，其餘是答案
+    // 有「答案」開頭的那一行：上面全部是題目（含選項），下面才是答案；沒有的話，第一行是題目
     const parts = first.innerHTML.split(/<br\s*\/?>/);
-    const q = parts.shift(), rest = parts.join('<br>');
+    let cut = parts.findIndex((t, k) => k > 0 && /^\s*(<strong>)?\s*答案/.test(t));
+    if (cut < 0) cut = 1;
+    const q = parts.slice(0, cut).join('<br>'), rest = parts.slice(cut).join('<br>');
     const box = document.createElement('div'); box.className = 'guess';
     box.innerHTML = `<span class="gl">先猜</span><p class="gq">${q}</p><button type="button" class="gb">想好了，看答案</button><div class="ga"></div>`;
     const ans = box.querySelector('.ga');
