@@ -23,7 +23,12 @@ const works = () => window.SUHAO_WORKS || window.SUHAO_WORKS_DEFAULT;
     W = cv.clientWidth; H = cv.clientHeight;
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     // 在畫布外把字標畫出來，再取樣成點
-    const tw = Math.min(W * .84, 760), fs = tw / 4.5, oc = document.createElement('canvas');
+    // 字標只能放在「上方標籤」和「下方文字」之間的空白，App 內建瀏覽器畫面比較矮時會自動縮小
+    const cr = cv.getBoundingClientRect(), tl = cv.parentElement.querySelector('.tl'), bot = cv.parentElement.querySelector('.over > .wrap:last-child');
+    const topY = tl ? tl.getBoundingClientRect().bottom - cr.top + 18 : H * .15;
+    const botY = bot ? bot.getBoundingClientRect().top - cr.top - 44 : H * .7;   // 44 = 留給「用手指撥動它」
+    const avail = Math.max(60, botY - topY);
+    const tw = Math.min(W * .84, 760), fs = Math.min(tw / 4.5, avail / 2.15), oc = document.createElement('canvas');
     oc.width = Math.ceil(tw); oc.height = Math.ceil(fs * 2.3);
     const o = oc.getContext('2d'), y0 = fs * 1.05;
     o.textBaseline = 'top'; o.textAlign = 'center';
@@ -35,7 +40,8 @@ const works = () => window.SUHAO_WORKS || window.SUHAO_WORKS_DEFAULT;
       draw(-fs * .82, .3, fs * .45); draw(-fs * .42, .6, fs * .45); draw(0, 1, 0);
     });
     const data = o.getImageData(0, 0, oc.width, oc.height).data, gap = W < 500 ? 2 : 3;
-    const ox = (W - oc.width) / 2, oy = H * .40 - oc.height / 2, old = P; P = [];
+    const ox = (W - oc.width) / 2, oy = (topY + botY) / 2 - fs * 1.14, old = P; P = [];
+    hint.style.top = Math.round(oy + fs * 2.05 + 14) + 'px';   // 提示字放在字標正下方
     for (let y = 0; y < oc.height; y += gap) for (let x = 0; x < oc.width; x += gap) {
       const a = data[(y * oc.width + x) * 4 + 3]; if (a < 40) continue;
       const L = a > 200 ? 0 : a > 110 ? 1 : 2, q = old[P.length];
@@ -73,7 +79,9 @@ const works = () => window.SUHAO_WORKS || window.SUHAO_WORKS_DEFAULT;
   cv.addEventListener('pointerleave', off); cv.addEventListener('touchend', off);
   if (!touch) hint.textContent = '用游標撥動它';
   new IntersectionObserver(es => visible = es[0].isIntersecting).observe(cv);
-  let rw = 0; addEventListener('resize', () => { if (Math.abs(innerWidth - rw) > 40) { rw = innerWidth; build(); } });
+  let rw = 0, rh = 0; addEventListener('resize', () => { if (Math.abs(innerWidth - rw) > 40 || Math.abs(innerHeight - rh) > 80) { rw = innerWidth; rh = innerHeight; build(); } });
+  rh = innerHeight;
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => build());   // 字型載完，文字高度會變
   rw = innerWidth; build(); requestAnimationFrame(frame);
 })();
 
@@ -124,7 +132,7 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
 const nav = document.getElementById('nav'), whereN = document.getElementById('whereN'), rooms = [...document.querySelectorAll('[data-room]')], darkEl = document.getElementById('dark');
 function onScroll() {
   const d = darkEl.getBoundingClientRect(); nav.classList.toggle('dark', d.top < 60 && d.bottom > 60);
-  let cur = '入口'; rooms.forEach(s => { if (s.getBoundingClientRect().top < innerHeight * .5) cur = s.dataset.room; }); whereN.textContent = cur; document.getElementById('where').style.opacity = cur === 'I' ? 0 : 1;
+  let cur = '入口'; rooms.forEach(s => { if (s.getBoundingClientRect().top < innerHeight * .5) cur = s.dataset.room; }); whereN.textContent = cur; document.getElementById('where').style.opacity = (cur === 'I' || cur === '入口') ? 0 : 1;   // 入口和 3D 展廳下方已經有字，不疊上去
 }
 addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true }); onScroll();
 })();
