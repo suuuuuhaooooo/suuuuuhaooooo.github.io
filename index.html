@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" class="loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>蘇昊數理｜讓抽象，被看見</title>
+<meta name="description" content="蘇昊數理：數學・理化一對一家教。數光島筆記本、見微理畫、會考模擬考、《本徵》等自製教材與網站作品常設展出。">
+<link rel="canonical" href="https://suuuuuhaooooo.github.io/">
+<meta name="theme-color" content="#fbfbf9">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="蘇昊數理">
+<meta property="og:title" content="蘇昊數理｜讓抽象，被看見">
+<meta property="og:description" content="數學・理化家教（實體／線上），自己寫、自己畫的教材作品，還有專欄。">
+<meta property="og:url" content="https://suuuuuhaooooo.github.io/">
+<meta property="og:image" content="https://suuuuuhaooooo.github.io/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"WebSite","name":"蘇昊數理","alternateName":["蘇昊","SUHAO MATH & SCIENCE"],"url":"https://suuuuuhaooooo.github.io/"},
+ {"@type":"EducationalOrganization","name":"蘇昊數理","url":"https://suuuuuhaooooo.github.io/","sameAs":["https://line.me/ti/p/~@000gwomo"]}
+]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+
+
+/* ---------- 開場：四格輪流亮 → 放大 → 左右切開 ---------- */
+html.loading,html.loading body{overflow:hidden}
+#loader{position:fixed;inset:0;z-index:200;cursor:pointer;--s:8px}
+#loader .half{position:absolute;top:0;bottom:0;background:#0b0b0b;transition:transform 1.2s cubic-bezier(.76,0,.24,1)}
+#loader .half.l{left:0;width:calc(50% + 1px)}
+#loader .half.r{left:50%;right:0}
+#loader .q{position:absolute;width:var(--s);height:var(--s);background:#2b2b2b;transition:background .45s ease,width .7s cubic-bezier(.65,0,.35,1),height .7s cubic-bezier(.65,0,.35,1),top .7s cubic-bezier(.65,0,.35,1)}
+#loader .half.l .q{right:1px}
+#loader .half.r .q{left:0}
+#loader .q.t{top:calc(50% - var(--s))}
+#loader .q.b{top:50%}
+#loader .q.on{background:#fbfbf9;transition:background .08s ease,width .7s cubic-bezier(.65,0,.35,1),height .7s cubic-bezier(.65,0,.35,1),top .7s cubic-bezier(.65,0,.35,1)}
+#loader .skip{position:absolute;bottom:calc(26px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-size:10px;letter-spacing:.3em;color:#444;transition:opacity .3s}
+#loader.grow{--s:34px}
+#loader.grow .q{background:#fbfbf9}
+#loader.grow .skip{opacity:0}
+#loader.open .half.l{transform:translateX(-101%)}
+#loader.open .half.r{transform:translateX(101%)}
+#loader.open{pointer-events:none}
+html.loading .entry .over{opacity:0}
+.entry .over{transition:opacity 1.4s ease .3s}
+
+/* ---------- 參觀動線 ---------- */
+#route{position:absolute;left:0;top:0;width:100%;pointer-events:none;z-index:2;overflow:visible}
+#route path.bg{fill:none;stroke:rgba(20,20,20,.08);stroke-width:1.2;stroke-dasharray:2 7}
+#route path.fg{fill:none;stroke:#141414;stroke-width:1.4;stroke-linecap:round}
+#route .st circle{fill:#fbfbf9;stroke:#141414;stroke-width:1.2;transition:fill .5s}
+#route .st.on circle{fill:#141414}
+#route .st text{font-family:var(--serif);font-style:italic;font-size:13px;fill:#141414;opacity:0;transition:opacity .6s}
+#route .st.on text{opacity:1}
+#route .tip{fill:#141414}
+.gallery,.darkroom{z-index:3}
+.nav .links em{font-family:var(--serif);font-style:italic;color:var(--sub);margin-right:3px}
+.status{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;letter-spacing:.22em;color:var(--sub);margin-bottom:14px}
+.status span+span::before{content:"—";margin-right:16px;color:#c9c7c0}
+.status .cats{flex-basis:100%;letter-spacing:.14em}
+.status .cats::before{display:none}
+.entry .cue{position:absolute;left:0;right:0;bottom:calc(30% - 10px);text-align:center;font-size:10px;letter-spacing:.3em;color:var(--sub);display:none}
+.sayhi{font-family:var(--sans)!important;font-weight:500!important;font-size:clamp(64px,15vw,190px)!important;letter-spacing:-.02em!important;line-height:1!important}
+.exit .thanks{color:var(--sub);margin-top:20px;font-size:15px;letter-spacing:.06em}
+.hi{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--fg);margin-top:56px;text-align:left}
+.hi a{position:relative;padding:18px 18px 22px 0;border-right:1px solid var(--line);transition:background .4s}
+.hi a:last-child{border-right:0}
+.hi a:hover{background:var(--wall)}
+.hi b{display:block;font-family:var(--serif);font-weight:500;font-size:19px;letter-spacing:.06em;margin-top:6px}
+.hi .arrow{position:absolute;right:16px;top:18px;font-style:normal}
+@media (max-width:680px){.hi{grid-template-columns:1fr 1fr}.hi a:nth-child(2){border-right:0}.hi a{border-bottom:1px solid var(--line);padding-left:4px}}
+footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:var(--fg);margin-bottom:10px}
+.exit{text-align:left!important}
+
+/* ---------- 入口：粒子字標 ---------- */
+.entry{position:relative;height:100vh;height:100svh;min-height:600px;overflow:hidden}
+#dust{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+.entry .over{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:calc(84px + env(safe-area-inset-top)) 0 34px}
+.entry .over a{pointer-events:auto}
+.entry .over>.wrap{width:100%}
+.entry .tl{display:flex;justify-content:space-between}
+.entry .tag{font-family:var(--serif);font-weight:300;font-size:clamp(30px,5.4vw,64px);letter-spacing:.1em;line-height:1.3}
+.entry .tag small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.32em;color:var(--sub);margin-top:10px}
+.info{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--fg);margin-top:26px}
+.info div,.info a{padding:12px 16px 0 0}
+.info b{display:block;font-weight:500;font-size:14px;letter-spacing:.08em;margin-top:2px}
+.info a b{text-decoration:underline;text-underline-offset:4px}
+.entry .hint{position:absolute;left:0;right:0;top:56%;text-align:center;font-size:11px;letter-spacing:.3em;color:var(--sub);transition:opacity 1s}
+@media (max-width:680px){.info{grid-template-columns:1fr 1fr;row-gap:12px}.hide-m{display:none}}
+
+/* ---------- 展間 I：3D 展廳 ---------- */
+.gallery{position:relative;height:760vh;background:#efede8}
+.gallery .sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:pan-y}
+.hud{position:absolute;inset:0;pointer-events:none}
+.hud .head-wrap{position:absolute;top:calc(80px + env(safe-area-inset-top));left:0;right:0;transition:opacity .8s}
+.hud .room-head{border-bottom-color:rgba(20,20,20,.5)}
+.hud .foot{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom))}
+.hud .foot .wrap{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.24em;color:#555}
+.hud .bar{height:1px;background:rgba(0,0,0,.15);position:relative;flex:1;margin:0 18px}
+.hud .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--fg);width:0}
+.hud .now{position:absolute;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom));text-align:center;transition:opacity .5s,transform .5s}
+.hud .now b{display:block;font-family:var(--serif);font-weight:500;font-size:20px;letter-spacing:.1em}
+.hud .now span{font-size:11px;letter-spacing:.24em;color:#666}
+.nogl{padding:120px 28px;display:none}
+.gallery.fallback .sticky{display:none}.gallery.fallback{height:auto}.gallery.fallback .nogl{display:block}
+
+/* 展品說明卡（點作品後） */
+.sheet{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px;background:rgba(239,237,232,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .5s}
+.sheet.on{opacity:1;pointer-events:auto}
+.sheet .card{width:100%;max-width:760px;background:#fff;display:grid;grid-template-columns:1.1fr 1fr;box-shadow:0 40px 80px -40px rgba(0,0,0,.4);transform:translateY(24px);transition:transform .7s cubic-bezier(.16,.8,.2,1)}
+.sheet.on .card{transform:none}
+.sheet .pic{background:#f2efe8;padding:30px;display:grid;place-items:center}
+.sheet .pic svg{width:100%;height:auto;max-height:46vh;border:1px solid #141414;background:#fff;padding:14px}
+.sheet .txt{padding:34px 30px;display:flex;flex-direction:column}
+.sheet .txt h3{font-family:var(--serif);font-weight:500;font-size:28px;letter-spacing:.08em;margin:8px 0 4px}
+.sheet .txt i{font-style:normal;font-size:12px;color:var(--sub);letter-spacing:.06em}
+.sheet .txt p{font-size:14px;color:#333;margin-top:16px;line-height:1.9}
+.sheet .txt .btn{margin-top:auto;align-self:flex-start}
+.sheet .x{position:absolute;top:calc(18px + env(safe-area-inset-top));right:22px;width:44px;height:44px;font-size:26px;font-weight:300}
+@media (max-width:680px){.sheet .card{grid-template-columns:1fr}.sheet .pic{padding:22px}.sheet .pic svg{max-height:34vh}.sheet .txt{padding:24px}.sheet .txt .btn{margin-top:22px}}
+
+
+/* ---------- 前言 ---------- */
+.prologue{padding:22vh 0 18vh}
+.prologue .grid{display:grid;grid-template-columns:1fr 2fr;gap:40px}
+.prologue p{font-family:var(--serif);font-weight:300;font-size:clamp(22px,2.6vw,30px);line-height:1.9;letter-spacing:.06em}
+.prologue p + p{margin-top:1.2em}
+.prologue .sig{margin-top:40px;font-size:13px;letter-spacing:.24em;color:var(--sub)}
+@media (max-width:680px){.prologue .grid{grid-template-columns:1fr;gap:18px}}
+
+/* ---------- 展間 I：橫向長牆 ---------- */
+.room-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--fg);padding-bottom:14px}
+.room-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(26px,5vw,56px);letter-spacing:.08em;line-height:1.2;white-space:nowrap}
+@media (max-width:680px){.room-head{flex-direction:column-reverse;align-items:flex-start;gap:6px}}
+
+/* ---------- 展間 III：閱覽室（專欄） ---------- */
+.column{padding:18vh 0 6vh;position:relative}
+.alist{margin-top:10px}
+.arow{position:relative;display:grid;grid-template-columns:130px 1fr auto;gap:24px;align-items:baseline;padding:30px 0;border-bottom:1px solid var(--line);transition:padding .5s cubic-bezier(.16,.8,.2,1)}
+.arow:hover{padding-left:14px}
+.arow .d{font-size:12px;letter-spacing:.18em;color:var(--sub);font-variant-numeric:tabular-nums}
+.arow h3{font-family:var(--serif);font-weight:300;font-size:clamp(22px,3vw,34px);letter-spacing:.06em;line-height:1.35}
+.arow p{font-size:14px;color:#555;margin-top:6px;max-width:640px}
+.arow .t{font-size:11px;letter-spacing:.2em;color:var(--sub);white-space:nowrap}
+.arow .thumb{display:none}
+.float{position:fixed;left:0;top:0;width:260px;aspect-ratio:4/3;pointer-events:none;z-index:30;opacity:0;transform:translate(-50%,-50%) scale(.9);transition:opacity .35s,transform .35s;background:#ddd center/cover no-repeat;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+.float.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.colmore{display:flex;justify-content:space-between;align-items:center;margin-top:34px}
+.empty{padding:40px 0;color:var(--sub);font-family:var(--serif);font-size:20px;letter-spacing:.08em}
+@media (max-width:680px){
+  .arow{grid-template-columns:1fr 84px;gap:4px 16px}
+  .arow .d{grid-column:1/-1;order:-1}.arow .t{display:none}
+  .arow .thumb{display:block;grid-row:2;grid-column:2;width:84px;aspect-ratio:1;background:#e6e4de center/cover no-repeat}
+  .float{display:none}
+}
+
+/* ---------- 展間 II：暗房 ---------- */
+.darkroom{position:relative;background:var(--dark);color:#f1f0ea;height:100vh;height:100svh;min-height:560px;overflow:hidden;cursor:none;touch-action:pan-y}
+.darkroom .hint{position:absolute;top:calc(84px + env(safe-area-inset-top));left:0;right:0;color:#6b6b68}
+.darkroom .hint .wrap{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.28em}
+.darkroom .work{position:absolute;inset:0;display:grid;place-items:center;padding:0 28px;
+  -webkit-mask-image:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 0,#000 var(--r,110px),transparent calc(var(--r,110px) * 2.2));
+          mask-image:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 0,#000 var(--r,110px),transparent calc(var(--r,110px) * 2.2))}
+.darkroom blockquote{font-family:var(--serif);font-weight:300;font-size:clamp(23px,5.6vw,70px);line-height:1.6;letter-spacing:.06em;text-align:center;max-width:1000px}
+.darkroom blockquote small{display:block;font-family:var(--sans);font-size:12px;letter-spacing:.32em;color:#9b9a94;margin-top:30px}
+.darkroom .ghost{position:absolute;font-family:var(--serif);color:#2c2c2a;font-size:clamp(60px,12vw,160px);font-weight:300;font-style:italic;pointer-events:none}
+.darkroom .glow{position:absolute;left:var(--x,50%);top:var(--y,50%);width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:1px solid rgba(255,255,255,.5);pointer-events:none;transition:opacity .4s}
+
+/* ---------- 展間 III：參觀資訊 ---------- */
+.visit{padding:18vh 0 14vh}
+.vtable{margin-top:10px}
+.vrow{display:grid;grid-template-columns:200px 1fr auto;gap:24px;align-items:baseline;border-bottom:1px solid var(--line);padding:26px 0;transition:padding .4s}
+.vrow:hover{padding-left:10px}
+.vrow .k{font-size:11px;letter-spacing:.28em;color:var(--sub)}
+.vrow .v{font-family:var(--serif);font-size:clamp(20px,2.4vw,26px);font-weight:300;letter-spacing:.06em}
+.vrow .v small{display:block;font-family:var(--sans);font-size:13px;color:var(--sub);letter-spacing:.04em;margin-top:2px}
+.vrow .tag{font-size:10px;letter-spacing:.24em;border:1px solid var(--fg);padding:3px 8px;margin-right:12px;vertical-align:middle}
+@media (max-width:680px){.vrow{grid-template-columns:1fr auto;gap:6px 14px}.vrow .k{grid-column:1/-1}}
+
+/* ---------- 出口 ---------- */
+.exit{padding:16vh 0 18vh;text-align:center;border-top:1px solid var(--line)}
+.exit p.label{margin-bottom:24px}
+.exit h2{font-family:var(--serif);font-weight:300;font-size:clamp(28px,7vw,84px);letter-spacing:.08em;line-height:1.3}
+.exit .row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:44px}
+
+/* 樓層指示 */
+.where{position:fixed;left:28px;bottom:calc(22px + env(safe-area-inset-bottom));z-index:40;font-size:10px;letter-spacing:.3em;color:var(--sub);mix-blend-mode:difference;color:#888;pointer-events:none;transition:opacity .5s}
+.where b{color:#ddd;font-weight:500}
+
+</style>
+</head>
+<body>
+<div id="loader" aria-hidden="true" title="點一下略過">
+  <div class="half l"><i class="q t" id="qTL"></i><i class="q b" id="qBL"></i></div>
+  <div class="half r"><i class="q t" id="qTR"></i><i class="q b" id="qBR"></i></div>
+  <span class="skip">點一下略過</span>
+</div>
+<script>
+/* 開場：四格小正方形，白光照「右上 → 右下 → 左下 → 左上」一直繞，
+   等字型和圖片真的載完，四格一起亮、放大，再左右切開 */
+(function () {
+  var L = document.getElementById('loader'), H = document.documentElement,
+      Q = ['qTR', 'qBR', 'qBL', 'qTL'].map(function (id) { return document.getElementById(id); }),
+      t0 = performance.now(), fonts = 0, loaded = 0, ended = false, k = 0, timer;
+  var again = false; try { again = sessionStorage.getItem('suhao-seen') === '1'; sessionStorage.setItem('suhao-seen', '1'); } catch (e) {}
+  var MIN = again ? 400 : 1900;                       // 至少繞一圈半
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) MIN = 0;
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fonts = 1; }); else fonts = 1;
+  addEventListener('load', function () { loaded = 1; });
+  function step() {
+    Q.forEach(function (q) { q.classList.remove('on'); });
+    Q[k % 4].classList.add('on'); k++;
+    // 繞回左上之後才檢查是否載好，讓動作停在完整的一圈
+    if (k % 4 === 0 && fonts && loaded && performance.now() - t0 >= MIN) return finish();
+    timer = setTimeout(step, 170);
+  }
+  function finish() {
+    if (ended) return; ended = true; clearTimeout(timer);
+    Q.forEach(function (q) { q.classList.add('on'); });
+    L.classList.add('grow');
+    setTimeout(function () { L.classList.add('open'); H.classList.remove('loading'); H.classList.add('ready'); }, again ? 450 : 850);
+    setTimeout(function () { L.remove(); }, again ? 1700 : 2150);
+  }
+  L.addEventListener('click', function () { loaded = fonts = 1; MIN = 0; finish(); });
+  setTimeout(function () { loaded = fonts = 1; }, 7000);
+  step();
+})();
+</script>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="蘇昊數理 首頁"><span class="logo sm" data-text="蘇昊數理"></span></a>
+    <div class="links">
+      <a href="#room1"><em>01</em> 作品</a>
+      <a href="#column"><em>02</em> 專欄</a>
+      <a href="#visit"><em>03</em> 參觀資訊</a>
+      <a href="#hi"><em>04</em> 聯絡</a>
+    </div>
+    <a class="pill" href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener">預約試教</a>
+  </div>
+</nav>
+
+<svg id="route" aria-hidden="true"><path class="bg" id="rbg"/><path class="fg" id="rfg"/><g id="rst"></g><circle class="tip" id="rtip" r="3.5"/></svg>
+<div class="where" id="where">展間 <b id="whereN">入口</b></div>
+
+<!-- 入口 -->
+<header class="entry" data-room="入口">
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <p class="hint" id="dhint2">用手指撥動它</p>
+  <p class="cue">SCROLL ↓ 跟著動線走</p>
+  <div class="over">
+    <div class="wrap tl"><span class="label">常設展<br>PERMANENT EXHIBITION</span><span class="label hide-m" style="text-align:right">SUHAO<br>MATH &amp; SCIENCE</span></div>
+    <div class="wrap">
+      <p class="status"><span>NO.01</span><span>數學・理化家教</span><span>2026</span><span class="cats">國小數學 / 國中理化 / 會考 / 網站 / 教材</span></p>
+      <h1 class="tag">讓抽象，被看見。<small>MAKING THE ABSTRACT VISIBLE</small></h1>
+      <div class="info">
+        <div><span class="label">展期</span><b>長期展出</b></div>
+        <div><span class="label">展出內容</span><b>數學・理化</b></div>
+        <div><span class="label">地點</span><b>實體／線上</b></div>
+        <a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener"><span class="label">入場方式</span><b>預約試教</b></a>
+      </div>
+    </div>
+  </div>
+  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">蘇昊數理</h1>
+</header>
+
+<!-- 前言 -->
+<section class="prologue" data-room="前言">
+  <div class="wrap grid">
+    <div class="label rv">前言<br>INTRODUCTION</div>
+    <div>
+      <p class="rv">公式、定律、圖形，本來就是有人看見了什麼，才把它寫下來的。</p>
+      <p class="rv d1">這個展間收的是我這幾年做的東西：講義、模擬考、網站和圖。每一件都在做同一件事，就是把看不見的東西，畫給學生看。</p>
+      <div class="sig rv d2">蘇昊　SU HAO</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 展間 I：3D 展廳 -->
+<section class="gallery" id="room1" data-room="I">
+  <div class="sticky">
+    <canvas id="gl" aria-label="3D 展廳，往下捲動在走廊中前進，點作品看說明"></canvas>
+    <div class="hud">
+      <div class="head-wrap" id="ghead"><div class="wrap room-head"><h2>展間 I　看見</h2><span class="label">ROOM I · 06 WORKS</span></div></div>
+      <div class="now" id="gnow"><span id="gnowN">往下捲動，走進展廳</span><b id="gnowT"></b></div>
+      <div class="foot"><div class="wrap"><span id="gcnt">00 / 06</span><span class="bar"><i id="gbar"></i></span><span>點作品看說明</span></div></div>
+    </div>
+  </div>
+  <div class="nogl wrap" id="nogl"></div>
+</section>
+
+<!-- 展間 II：暗房 -->
+<section class="darkroom" id="dark" data-room="II">
+  <div class="hint"><div class="wrap"><span>展間 II　暗房</span><span id="dhint">移動游標照亮牆面</span></div></div>
+  <div class="work" id="dwork">
+    <span class="ghost" style="left:8%;top:18%">f(x)</span>
+    <span class="ghost" style="right:6%;bottom:14%">λ</span>
+    <span class="ghost" style="left:12%;bottom:10%">∫</span>
+    <blockquote>每一個學生，<br>都是一件還沒完成的作品。<small>蘇昊　SU HAO</small></blockquote>
+  </div>
+  <i class="glow" id="dglow"></i>
+</section>
+
+<!-- 展間 III：閱覽室（專欄） -->
+<section class="column" id="column" data-room="III">
+  <div class="wrap">
+    <div class="room-head rv"><h2>展間 III　閱覽室</h2><span class="label">READING ROOM · 專欄</span></div>
+    <div class="alist" id="alist"><div class="empty">正在整理書架…</div></div>
+    <div class="colmore rv"><span class="label">COLUMN</span><a class="btn" href="articles.html"><span class="arrow">看全部專欄　</span></a></div>
+  </div>
+  <div class="float" id="float"></div>
+</section>
+
+<!-- 展間 IV：參觀資訊 -->
+<section class="visit" id="visit" data-room="IV">
+  <div class="wrap">
+    <div class="room-head rv"><h2>展間 IV　參觀資訊</h2><span class="label">VISITOR INFORMATION</span></div>
+    <div class="vtable">
+      <a class="vrow rv" href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener"><span class="k">預約</span><span class="v">一對一試教<small>實體或線上，國小到國中會考的數學和理化。傳 LINE 約時間</small></span><span class="arrow"></span></a>
+      <a class="vrow rv" href="/-/schedule.html"><span class="k">開放時間</span><span class="v">即時排課總表<small>看看目前還有哪些時段</small></span><span class="arrow"></span></a>
+      <a class="vrow rv" href="/-/profile.html"><span class="k">策展人</span><span class="v">師資簡介<small>國立金門大學電機工程學系</small></span><span class="arrow"></span></a>
+      <a class="vrow rv" href="/-/FAQ.html"><span class="k">須知</span><span class="v">常見問題<small>收費、上課方式、請假補課</small></span><span class="arrow"></span></a>
+      <a class="vrow rv" href="/-/classroom.html"><span class="k">學生專用</span><span class="v">數位雲端教室<small>上課連結、作業與講義</small></span><span class="arrow"></span></a>
+      <a class="vrow rv" href="https://myship.7-11.com.tw/general/detail/GM2609106147789" target="_blank" rel="noopener"><span class="k">紀念品店</span><span class="v">蘇昊小舖<small>7-11 賣貨便，紙本附線上電子檔</small></span><span class="arrow"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 出口 -->
+<section class="exit" id="hi" data-room="出口">
+  <div class="wrap">
+    <p class="label rv">04 · EXIT</p>
+    <h2 class="rv d1 sayhi">SAY HI.</h2>
+    <p class="rv d1 thanks">謝謝你來看展。課程、時段、題目，都可以直接問我。</p>
+    <div class="hi rv d2">
+      <a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener"><span class="label">預約・問題</span><b>官方 LINE</b><i class="arrow"></i></a>
+      <a href="https://www.threads.com/@suuuuuhaooooo" target="_blank" rel="noopener"><span class="label">日常</span><b>Threads</b><i class="arrow"></i></a>
+      <a href="articles.html"><span class="label">讀一點東西</span><b>專欄</b><i class="arrow"></i></a>
+      <a href="https://suuuuuhaooooo.bobaboba.me/" target="_blank" rel="noopener"><span class="label">喜歡這些作品</span><b>請作者喝杯咖啡</b><i class="arrow"></i></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <a href="articles.html">專欄</a><a href="/-/profile.html">師資簡介</a><a href="/-/schedule.html">排課總表</a><a href="/-/FAQ.html">常見問題</a>
+      <a href="/-/classroom.html">雲端教室</a><a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener">官方 LINE</a><a href="/-/">舊版入口網</a>
+    </div>
+    <span class="still">這個展，還在佈展中。</span>© 2026 蘇昊數理 SUHAO MATH &amp; SCIENCE
+  </div>
+</footer>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
+  <button class="x" id="sx" aria-label="關閉">×</button>
+  <div class="card">
+    <div class="pic" id="sPic"></div>
+    <div class="txt"><span class="label" id="sNo"></span><h3 id="sTitle"></h3><i id="sMed"></i><p id="sDesc"></p><a class="btn solid" id="sGo" target="_blank" rel="noopener"></a></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
+<script src="assets/logo.js"></script>
+<script src="assets/exhibit.js"></script>
+<script src="assets/route.js"></script>
+<script>
+/* 閱覽室：最新 4 篇專欄，滑過去封面圖跟著游標 */
+(async function () {
+  const C = window.SUHAO, box = document.getElementById('alist'), fl = document.getElementById('float');
+  let rows;
+  try { rows = await C.listArticles(4); } catch (e) { rows = null; }
+  if (!rows || !rows.length) { box.innerHTML = '<div class="empty">' + (rows ? '第一篇專欄，正在寫。' : '專欄暫時讀不到，晚點再來。') + '</div>'; return; }
+  box.innerHTML = rows.map(a => `
+    <a class="arow" href="${C.articleUrl(a.slug)}" data-cover="${C.esc(a.cover_url || '')}">
+      <span class="d">${C.date(a.published_at)}</span>
+      <div><h3>${C.esc(a.title)}</h3>${a.excerpt ? `<p>${C.esc(a.excerpt)}</p>` : ''}</div>
+      <span class="t">${C.esc((a.tags || [])[0] || '')}</span>
+      ${a.cover_url ? `<span class="thumb" style="background-image:url('${C.esc(a.cover_url)}')"></span>` : ''}
+    </a>`).join('');
+  box.querySelectorAll('.arow').forEach(r => {
+    r.addEventListener('mouseenter', () => { const c = r.dataset.cover; if (!c) return; fl.style.backgroundImage = `url('${c}')`; fl.classList.add('on'); });
+    r.addEventListener('mouseleave', () => fl.classList.remove('on'));
+  });
+  addEventListener('mousemove', e => { fl.style.left = (e.clientX + 150) + 'px'; fl.style.top = e.clientY + 'px'; });
+})();
+</script>
+
+</body>
+</html>

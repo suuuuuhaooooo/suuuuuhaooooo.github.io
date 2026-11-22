@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>專欄｜蘇昊數理</title>
+<meta name="description" content="蘇昊數理專欄：教學現場的觀察、讀書方法，還有數學與物理裡值得一看的東西。">
+<link rel="canonical" href="https://suuuuuhaooooo.github.io/articles.html">
+<meta name="theme-color" content="#fbfbf9">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="蘇昊數理">
+<meta property="og:title" content="專欄｜蘇昊數理">
+<meta property="og:image" content="https://suuuuuhaooooo.github.io/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.head{padding:calc(150px + env(safe-area-inset-top)) 0 30px;border-bottom:1px solid var(--fg)}
+.head h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,9vw,110px);letter-spacing:.08em;line-height:1.1;margin-top:12px}
+.head p{color:var(--sub);margin-top:14px;font-size:14px;letter-spacing:.06em;max-width:560px}
+.bar{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;padding:22px 0 10px}
+.tags{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;font-size:13px;letter-spacing:.2em;flex:1}
+.tags::-webkit-scrollbar{display:none}
+.tags button{flex:none;color:var(--sub);padding-bottom:5px;border-bottom:1px solid transparent}
+.tags button.on{color:var(--fg);border-bottom-color:var(--fg)}
+.q{border:0;border-bottom:1px solid #cfcec8;background:none;font:inherit;font-size:15px;padding:6px 2px;width:200px;outline:none;letter-spacing:.06em}
+.q:focus{border-bottom-color:var(--fg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:64px 44px;padding:40px 0 120px}
+.card{display:block;opacity:0;transform:translateY(24px);animation:up 1.1s cubic-bezier(.16,.8,.2,1) forwards}
+.card .cv{aspect-ratio:4/3;background:#eceae4 center/cover no-repeat;position:relative;overflow:hidden}
+.card .cv::after{content:"";position:absolute;inset:0;background:var(--fg);opacity:0;transition:opacity .5s}
+.card:hover .cv::after{opacity:.08}
+.card .cv b{position:absolute;left:20px;bottom:4px;font-family:var(--serif);font-weight:300;font-size:90px;color:#d6d3ca;line-height:1.2}
+.card .meta{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.2em;color:var(--sub);margin-top:18px}
+.card h2{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:.05em;line-height:1.45;margin-top:6px}
+.card p{font-size:14px;color:#555;margin-top:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card.big{grid-column:1/-1;display:grid;grid-template-columns:1.4fr 1fr;gap:44px;align-items:end}
+.card.big h2{font-size:clamp(28px,3.6vw,44px);font-weight:300}
+@media (max-width:760px){.card.big{grid-template-columns:1fr;gap:0}}
+@keyframes up{to{opacity:1;transform:none}}
+.empty{padding:80px 0 140px;font-family:var(--serif);font-size:22px;color:var(--sub);letter-spacing:.08em}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="./" aria-label="蘇昊數理 首頁"><span class="logo sm" data-text="蘇昊數理"></span></a>
+  <div class="links"><a href="./#room1">作品</a><a href="articles.html">專欄</a><a href="./#visit">參觀資訊</a></div>
+  <a class="pill" href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener">預約試教</a>
+</div></nav>
+
+<main class="wrap">
+  <header class="head">
+    <span class="label">展間 III · READING ROOM</span>
+    <h1>閱覽室</h1>
+    <p>教學現場的觀察、讀書方法，還有數學和物理裡我覺得很美的東西。</p>
+  </header>
+  <div class="bar"><div class="tags" id="tags"></div><input class="q" id="q" type="search" placeholder="搜尋文章" aria-label="搜尋文章"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer class="site"><div class="wrap">
+  <div class="row"><a href="./">首頁</a><a href="/-/profile.html">師資簡介</a><a href="/-/FAQ.html">常見問題</a><a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener">官方 LINE</a></div>
+  © 2026 蘇昊數理 SUHAO MATH &amp; SCIENCE
+</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
+<script src="assets/logo.js"></script>
+<script>
+(async function () {
+  const C = window.SUHAO, grid = document.getElementById('grid'), tagsEl = document.getElementById('tags'), q = document.getElementById('q');
+  let all = [];
+  try { all = await C.listArticles(200); } catch (e) { grid.innerHTML = '<div class="empty">專欄暫時讀不到，晚點再來。</div>'; return; }
+  if (!all.length) { grid.innerHTML = '<div class="empty">第一篇專欄，正在寫。</div>'; return; }
+  const tags = ['全部', ...new Set(all.flatMap(a => a.tags || []))];
+  let cur = new URLSearchParams(location.search).get('tag') || '全部';
+  tagsEl.innerHTML = tags.map(t => `<button data-t="${C.esc(t)}">${C.esc(t)}</button>`).join('');
+  function render() {
+    tagsEl.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === cur));
+    const kw = q.value.trim().toLowerCase();
+    const list = all.filter(a => (cur === '全部' || (a.tags || []).includes(cur)) &&
+      (!kw || (a.title + ' ' + (a.excerpt || '')).toLowerCase().includes(kw)));
+    grid.innerHTML = list.length ? list.map((a, i) => {
+      const big = i === 0 && cur === '全部' && !kw;
+      return `<a class="card${big ? ' big' : ''}" href="${C.articleUrl(a.slug)}" style="animation-delay:${Math.min(i, 8) * .07}s">
+        <div class="cv" style="${a.cover_url ? `background-image:url('${C.esc(a.cover_url)}')` : ''}">${a.cover_url ? '' : `<b>${C.esc(a.title.charAt(0))}</b>`}</div>
+        <div><div class="meta"><span>${C.date(a.published_at)}</span><span>${C.esc((a.tags || []).join('・'))}</span></div>
+        <h2>${C.esc(a.title)}</h2>${a.excerpt ? `<p>${C.esc(a.excerpt)}</p>` : ''}</div></a>`;
+    }).join('') : '<div class="empty">找不到符合的文章。</div>';
+  }
+  tagsEl.onclick = e => { const b = e.target.closest('button'); if (b) { cur = b.dataset.t; render(); } };
+  q.oninput = render;
+  render();
+})();
+</script>
+</body>
+</html>

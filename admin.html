@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>後台｜蘇昊數理</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#fbfbf9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+body{background:var(--wall)}
+.nav .who{font-size:12px;color:var(--sub);letter-spacing:.06em}
+.gate{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:24px}
+.gate .box{background:#fff;padding:44px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 30px 60px -30px rgba(0,0,0,.3)}
+.gate .logo{font-size:26px;margin-bottom:22px}
+.gate h1{font-family:var(--serif);font-weight:300;font-size:28px;letter-spacing:.12em}
+.gate p{color:var(--sub);font-size:13px;margin:8px 0 28px}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:50px;border:1px solid #cfcec8;background:#fff;font-size:15px;letter-spacing:.08em;transition:background .2s}
+.gbtn:hover{background:#f6f5f1}
+.gbtn svg{width:18px;height:18px}
+
+.app{display:none;grid-template-columns:300px 1fr;min-height:100vh;padding-top:calc(60px + env(safe-area-inset-top))}
+.app.on{display:grid}
+.side{border-right:1px solid var(--line);background:var(--bg);display:flex;flex-direction:column;height:calc(100vh - 60px);position:sticky;top:60px}
+.side .top{padding:18px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--line)}
+.side .top input{flex:1;border:0;border-bottom:1px solid #cfcec8;background:none;font:inherit;font-size:14px;padding:6px 0;outline:none}
+.newbtn{height:34px;padding:0 14px;background:var(--fg);color:#fff;font-size:12px;letter-spacing:.16em;white-space:nowrap}
+.list{overflow:auto;flex:1}
+.item{display:block;width:100%;text-align:left;padding:16px 18px;border-bottom:1px solid var(--line);transition:background .2s}
+.item:hover{background:#f4f3ef}
+.item.on{background:#efede8}
+.item b{display:block;font-family:var(--serif);font-weight:500;font-size:15px;line-height:1.5}
+.item span{font-size:11px;color:var(--sub);letter-spacing:.1em}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px;background:#2e6b3a}
+.dot.draft{background:#c9a227}.dot.later{background:#1d3c78}
+
+.ed{padding:28px clamp(18px,3vw,44px) 120px;max-width:1400px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.row3{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:18px}
+.ed .field input,.ed .field textarea{background:#fff;border:1px solid #dcdad3;padding:0 12px}
+.ed .field input{height:44px;font-size:15px}
+.ed .field textarea{width:100%;font:inherit;font-size:15px;line-height:1.8;padding:10px 12px;outline:none;resize:vertical;color:var(--fg)}
+.ed .field input:focus,.ed .field textarea:focus{border-color:var(--fg)}
+.titlein{font-family:var(--serif)!important;font-size:26px!important;height:58px!important}
+.status{display:flex;gap:0;border:1px solid var(--fg);height:44px}
+.status button{flex:1;font-size:13px;letter-spacing:.14em}
+.status button.on{background:var(--fg);color:#fff}
+.coverbox{display:flex;gap:12px;align-items:center}
+.coverbox .pv{width:84px;height:63px;background:#eceae4 center/cover no-repeat;border:1px solid #dcdad3;flex:none}
+.coverbox input[type=url]{flex:1}
+.mini{height:44px;padding:0 14px;border:1px solid #cfcec8;background:#fff;font-size:12px;letter-spacing:.12em;white-space:nowrap}
+.mini:hover{border-color:var(--fg)}
+.write{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:22px;border:1px solid #dcdad3;background:#fff;min-height:62vh}
+.write .tb{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #dcdad3;padding:6px;background:#faf9f6}
+.write .tb button{min-width:36px;height:32px;padding:0 10px;font-size:13px;color:#333}
+.write .tb button:hover{background:#efede8}
+.write .tb .sp{flex:1}
+.write .tb .tabs{display:none}
+#md{border:0;outline:none;resize:none;padding:22px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;line-height:1.9;min-height:60vh;border-right:1px solid #dcdad3;color:var(--fg);background:#fff}
+.pv-body{padding:22px 28px;overflow:auto;max-height:78vh;font-family:var(--serif);font-size:17px;line-height:2;color:#1e1e1e}
+.pv-body > *+*{margin-top:1em}.pv-body h2{font-weight:500;font-size:23px;margin-top:1.8em}.pv-body h3{font-weight:500;font-size:19px}
+.pv-body blockquote{border-left:1px solid var(--fg);padding-left:16px;color:#555}.pv-body img{max-width:100%}
+.pv-body ul,.pv-body ol{padding-left:1.4em}.pv-body code{background:#efede8;padding:0 .3em;font-size:.85em}
+.pv-body pre{background:#141414;color:#eee;padding:14px;overflow:auto}.pv-body pre code{background:none}
+.pv-body a{border-bottom:1px solid currentColor}
+.bottom{position:fixed;left:300px;right:0;bottom:0;background:rgba(251,251,249,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px clamp(18px,3vw,44px) calc(12px + env(safe-area-inset-bottom));display:flex;gap:12px;align-items:center;z-index:20}
+.bottom .msg{margin:0;flex:1}
+.bottom .btn{height:44px;padding:0 22px}
+.del{color:#b3261e;font-size:12px;letter-spacing:.14em}
+.hint{font-size:12px;color:var(--sub);margin-top:6px;line-height:1.7}
+.empty{padding:80px 20px;text-align:center;color:var(--sub);font-family:var(--serif);font-size:18px}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;max-height:none;border-right:0}
+  .side .list{max-height:34vh}
+  .app.editing .side{display:none}
+  .row2,.row3{grid-template-columns:1fr;gap:0}
+  .write{grid-template-columns:1fr}
+  .write .tb .tabs{display:flex;gap:2px}
+  .write .tb .tabs button.on{background:var(--fg);color:#fff}
+  #md{border-right:0}
+  .write.preview #md{display:none}.write:not(.preview) .pv-body{display:none}
+  .bottom{left:0}
+  .back{display:inline-flex!important}
+  .app:not(.editing) .ed,.app:not(.editing) .bottom{display:none}
+}
+.back{display:none;font-size:12px;letter-spacing:.14em;margin-bottom:14px;color:var(--sub)}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="./" aria-label="蘇昊數理 首頁"><span class="logo sm" data-text="蘇昊數理"></span></a>
+  <span class="who" id="who"></span>
+  <button class="pill" id="out" style="display:none">登出</button>
+</div></nav>
+
+<!-- 登入 -->
+<div class="gate" id="gate">
+  <div class="box">
+    <span class="logo drop" data-text="蘇昊數理"></span>
+    <h1>後台</h1>
+    <p id="gmsg">用管理員的 Google 帳號登入，就能寫專欄。</p>
+    <button class="gbtn" id="gin"><svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>使用 Google 登入</button>
+  </div>
+</div>
+
+<!-- 編輯器 -->
+<div class="app" id="app">
+  <aside class="side">
+    <div class="top"><input id="find" placeholder="找文章" aria-label="找文章"><button class="newbtn" id="new">＋ 新文章</button></div>
+    <div class="list" id="list"></div>
+  </aside>
+
+  <main class="ed" id="ed">
+    <button class="back" id="back">← 文章列表</button>
+    <label class="field"><span>標題</span><input class="titlein" id="f-title" placeholder="文章標題"></label>
+    <div class="row3">
+      <label class="field"><span>網址代稱</span><input id="f-slug" placeholder="例如 how-to-read-graphs" autocapitalize="off" spellcheck="false"></label>
+      <label class="field"><span>發布時間</span><input id="f-at" type="datetime-local"></label>
+      <div class="field"><span>狀態</span><div class="status" id="f-status"><button type="button" data-v="0">草稿</button><button type="button" data-v="1">發布</button></div></div>
+    </div>
+    <p class="hint" id="slughint">網址會是 article.html?s=…，用英文、數字、連字號。空著的話存檔時自動產生。</p>
+    <div class="row2">
+      <label class="field"><span>摘要（列表上顯示）</span><input id="f-ex" placeholder="一兩句話說這篇在講什麼"></label>
+      <label class="field"><span>標籤（用逗號分開）</span><input id="f-tags" placeholder="教學筆記, 會考, 物理"></label>
+    </div>
+    <div class="field"><span>封面圖</span>
+      <div class="coverbox"><div class="pv" id="cpv"></div><input id="f-cover" type="url" placeholder="貼圖片網址，或按右邊上傳"><button class="mini" id="cup" type="button">上傳</button></div>
+    </div>
+
+    <div class="write" id="write">
+      <div class="tb" id="tb">
+        <button data-k="h2" title="大標">H2</button><button data-k="h3" title="小標">H3</button>
+        <button data-k="b" title="粗體"><b>B</b></button><button data-k="i" title="斜體"><i>I</i></button>
+        <button data-k="q" title="引用">❝</button><button data-k="ul" title="清單">•</button><button data-k="ol" title="編號">1.</button>
+        <button data-k="link" title="連結">連結</button><button data-k="img" title="插入圖片">圖片</button>
+        <button data-k="m" title="行內公式">$x$</button><button data-k="mm" title="獨立公式">$$</button><button data-k="hr" title="分隔線">—</button>
+        <span style="width:1px;background:#dcdad3;margin:4px 6px"></span>
+        <button data-k="guess" title="先猜卡：讀者想完再看答案">先猜</button><button data-k="note" title="提醒框">注意</button>
+        <button data-k="ev" title="證據等級標籤">證據</button><button data-k="lab" title="互動實驗">實驗</button><button data-k="embed" title="嵌入見微理畫／數光島的單元">嵌入</button>
+        <button data-k="tpl" title="插入整篇「時事 × 自然」架構" style="border:1px solid #141414">時事×自然 模板</button>
+        <span class="sp"></span>
+        <span class="tabs"><button data-tab="w" class="on">編輯</button><button data-tab="p">預覽</button></span>
+      </div>
+      <textarea id="md" placeholder="開始寫……&#10;&#10;## 小標題&#10;**粗體**、> 引用、- 清單&#10;公式：$a^2+b^2=c^2$"></textarea>
+      <div class="pv-body" id="pv"></div>
+    </div>
+    <p class="hint">用 Markdown 寫。公式用 $…$（行內）或 $$…$$（獨立一行）。「先猜」會變成讀者要按才看得到答案的卡片；「實驗」裡寫的 HTML 會在隔離的小視窗裡執行；「嵌入」可以放見微理畫、數光島的單元頁。存檔快捷鍵：⌘S／Ctrl+S。</p>
+  </main>
+
+  <div class="bottom" id="bottom">
+    <button class="del" id="del">刪除</button>
+    <div class="msg" id="msg"></div>
+    <a class="btn" id="view" target="_blank" rel="noopener">看前台</a>
+    <button class="btn solid" id="save">存檔</button>
+  </div>
+</div>
+<input type="file" id="file" accept="image/*" hidden>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="assets/config.js"></script>
+<script src="assets/logo.js"></script>
+<script src="assets/render.js"></script>
+<script>
+(async function () {
+  const C = window.SUHAO, sb = C.sb, $ = id => document.getElementById(id);
+  const say = (t, k) => { $('msg').textContent = t; $('msg').className = 'msg ' + (k || ''); };
+  if (!sb) { $('gmsg').textContent = 'Supabase 還沒設定（assets/config.js）。'; $('gin').disabled = true; return; }
+
+  $('gin').onclick = async () => {
+    const { error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href.split('#')[0] } });
+    if (error) $('gmsg').textContent = error.message;
+  };
+  $('out').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return;
+  $('who').textContent = session.user.email; $('out').style.display = '';
+  const { data: ok } = await sb.rpc('is_site_admin');
+  if (!ok) { $('gmsg').innerHTML = `<b>${C.esc(session.user.email)}</b><br>這個帳號沒有管理權限。`; $('gin').style.display = 'none'; return; }
+  $('gate').style.display = 'none'; $('app').classList.add('on');
+
+  /* ---------- 狀態 ---------- */
+  let all = [], cur = null, dirty = false, pub = false;
+  const F = { title: $('f-title'), slug: $('f-slug'), at: $('f-at'), ex: $('f-ex'), tags: $('f-tags'), cover: $('f-cover'), md: $('md') };
+  const toLocal = d => { const x = new Date(d), p = n => String(n).padStart(2, '0'); return `${x.getFullYear()}-${p(x.getMonth() + 1)}-${p(x.getDate())}T${p(x.getHours())}:${p(x.getMinutes())}`; };
+  const setPub = v => { pub = v; $('f-status').querySelectorAll('button').forEach(b => b.classList.toggle('on', (b.dataset.v === '1') === v)); };
+  const mark = v => { dirty = v; say(v ? '尚未存檔' : ''); };
+
+  async function load() {
+    const { data, error } = await sb.from('articles').select('id,slug,title,published,published_at,updated_at').order('published_at', { ascending: false });
+    if (error) { say('讀取失敗：' + error.message, 'err'); return; }
+    all = data; drawList();
+  }
+  function drawList() {
+    const kw = $('find').value.trim().toLowerCase(), now = Date.now();
+    const rows = all.filter(a => !kw || a.title.toLowerCase().includes(kw));
+    $('list').innerHTML = rows.length ? rows.map(a => {
+      const st = !a.published ? ['draft', '草稿'] : new Date(a.published_at) > now ? ['later', '排程'] : ['', '已發布'];
+      return `<button class="item${cur && cur.id === a.id ? ' on' : ''}" data-id="${a.id}"><b>${C.esc(a.title)}</b><span><i class="dot ${st[0]}"></i>${st[1]}・${C.date(a.published_at)}</span></button>`;
+    }).join('') : '<div class="empty">還沒有文章</div>';
+  }
+  $('list').onclick = async e => { const b = e.target.closest('.item'); if (!b) return; if (dirty && !await sure('目前的修改還沒存檔，確定要切換？')) return; open(b.dataset.id); };
+  $('find').oninput = drawList;
+
+  async function open(id) {
+    say('讀取中…');
+    const { data: a, error } = await sb.from('articles').select('*').eq('id', id).single();
+    if (error) return say(error.message, 'err');
+    fill(a); drawList(); $('app').classList.add('editing'); scrollTo(0, 0);
+  }
+  function fill(a) {
+    cur = a;
+    F.title.value = a?.title || ''; F.slug.value = a?.slug || ''; F.ex.value = a?.excerpt || '';
+    F.tags.value = (a?.tags || []).join(', '); F.cover.value = a?.cover_url || ''; F.md.value = a?.body || '';
+    F.at.value = toLocal(a?.published_at || new Date()); setPub(!!a?.published);
+    $('cpv').style.backgroundImage = a?.cover_url ? `url('${a.cover_url}')` : '';
+    $('view').href = a?.slug ? C.articleUrl(a.slug) : 'articles.html';
+    $('del').style.visibility = a?.id ? 'visible' : 'hidden';
+    preview(); mark(false);
+    // 有沒存的本機備份？
+    const bk = localStorage.getItem('suhao-draft-' + (a?.id || 'new'));
+    if (bk && bk !== F.md.value) { say('有一份沒存檔的內容備份，按「還原」可以找回。'); showRestore(bk); }
+  }
+  function showRestore(bk) {
+    const b = document.createElement('button'); b.className = 'mini'; b.textContent = '還原'; b.style.marginLeft = '10px';
+    b.onclick = () => { F.md.value = bk; preview(); mark(true); b.remove(); }; $('msg').appendChild(b);
+  }
+  $('new').onclick = async () => { if (dirty && !await sure('目前的修改還沒存檔，確定要開新文章？')) return; fill(null); drawList(); $('app').classList.add('editing'); F.title.focus(); };
+  $('back').onclick = () => $('app').classList.remove('editing');
+  $('f-status').onclick = e => { const b = e.target.closest('button'); if (b) { setPub(b.dataset.v === '1'); mark(true); } };
+  Object.values(F).forEach(el => el.addEventListener('input', () => mark(true)));
+  F.cover.addEventListener('input', () => $('cpv').style.backgroundImage = F.cover.value ? `url('${F.cover.value}')` : '');
+
+  /* ---------- 預覽 ---------- */
+  let t = 0;
+  function preview() { window.renderArticle($('pv'), F.md.value); }
+  F.md.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { preview(); try { localStorage.setItem('suhao-draft-' + (cur?.id || 'new'), F.md.value); } catch (_) {} }, 250); });
+  $('tb').querySelector('.tabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; e.stopPropagation();
+    $('write').classList.toggle('preview', b.dataset.tab === 'p'); $('tb').querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b)); preview(); };
+
+  /* ---------- 工具列 ---------- */
+  function wrap(a, b = a, ph = '') {
+    const s = F.md.selectionStart, e = F.md.selectionEnd, sel = F.md.value.slice(s, e) || ph;
+    F.md.setRangeText(a + sel + b, s, e, 'end'); F.md.focus();
+    if (!F.md.value.slice(s, e) && ph) { F.md.selectionStart = s + a.length; F.md.selectionEnd = s + a.length + ph.length; }
+    F.md.dispatchEvent(new Event('input'));
+  }
+  function line(prefix) {
+    const s = F.md.selectionStart, start = F.md.value.lastIndexOf('\n', s - 1) + 1;
+    F.md.setRangeText(prefix, start, start, 'end'); F.md.focus(); F.md.dispatchEvent(new Event('input'));
+  }
+  $('tb').addEventListener('click', e => {
+    const b = e.target.closest('button[data-k]'); if (!b) return;
+    ({ h2: () => line('## '), h3: () => line('### '), b: () => wrap('**', '**', '粗體'), i: () => wrap('*', '*', '斜體'),
+       q: () => line('> '), ul: () => line('- '), ol: () => line('1. '), hr: () => wrap('\n\n---\n\n', ''),
+       link: () => wrap('[', '](https://)', '連結文字'), m: () => wrap('$', '$', 'x^2'), mm: () => wrap('\n$$\n', '\n$$\n', '\\frac{a}{b}'),
+       img: () => pick(url => wrap(`\n![`, `](${url})\n`, '圖片說明')),
+       guess: () => wrap('\n> [!先猜] ', '\n> 答案和解說寫在這裡。\n', '問題寫在這一行？'),
+       note: () => wrap('\n> [!注意] ', '\n', '提醒讀者的話'),
+       ev: () => evPick(),
+       lab: () => wrap('\n```lab\n' + LAB + '\n```\n', ''),
+       embed: () => wrap('\n```embed\n', '\n```\n', '/science-Illustration/'),
+       tpl: () => { if (F.md.value.trim() && !tplArm) { tplArm = 1; say('內文不是空的，再按一次「模板」會插在游標位置。'); setTimeout(() => tplArm = 0, 4000); return; }
+                    tplArm = 0; wrap(TPL, ''); if (!F.tags.value) F.tags.value = '時事×自然'; } })[b.dataset.k]();
+  });
+
+  /* ---------- 時事 × 自然 ---------- */
+  let tplArm = 0;
+  const LAB = `<label>推力 F（N）：<b id="fv">3000</b></label><input id="f" type="range" min="500" max="10000" step="100" value="3000">
+<label>質量 m（kg）：<b id="mv">1500</b></label><input id="m" type="range" min="500" max="3000" step="50" value="1500">
+<p class="out" id="out"></p>
+<script>
+const $=id=>document.getElementById(id);
+function go(){const F=+$('f').value,m=+$('m').value,a=F/m;
+  $('fv').textContent=F;$('mv').textContent=m;
+  $('out').textContent='a = F ÷ m = '+a.toFixed(2)+' m/s²，0→100 km/h 約 '+(27.8/a).toFixed(1)+' 秒';}
+document.querySelectorAll('input').forEach(i=>i.oninput=go);go();
+<\/script>`;
+  const TPL = `> [!注意] 這篇用新聞當引子講自然科學。文中數字是教學用的估算，不是官方規格。資訊截至 ${new Date().toLocaleDateString('zh-TW')}。
+
+## 0　發生了什麼
+一句話說事件。{報導}
+- 時間線：
+- 目前確定的：{官方}
+- 還只是說法的：{訪談}
+
+## 1　先猜
+> [!先猜] 讀者直覺會答錯的那個問題？
+> 公布答案，用一兩句話說為什麼。
+
+## 2　背後的原理
+課本在哪裡：國二理化〈力與運動〉
+$F = ma$
+
+## 3　動手試
+` + '```lab\n' + LAB + '\n```' + `
+
+## 4　判讀證據
+| 說法 | 誰說的 | 證據等級 |
+|---|---|---|
+| | | {官方} |
+| | | {推估} |
+
+## 5　還不知道的事
+- 
+
+## 6　如果會考這樣考
+（一題素養題，詳解寫在下面的先猜卡裡）
+
+> [!先猜] 題目……
+> (A) (B) (C) (D)
+> 答案與詳解。
+
+## 資料來源
+1. 
+`;
+  function evPick() {
+    const bar = document.createElement('span'); bar.style.marginLeft = '10px';
+    ['官方', '研究', '報導', '訪談', '推估', '假設'].forEach(k => { const b = document.createElement('button'); b.className = 'mini'; b.style.height = '30px'; b.textContent = k;
+      b.onclick = () => { wrap(`{${k}}`, ''); say(''); }; bar.appendChild(b); });
+    say('選一個證據等級：'); $('msg').appendChild(bar);
+  }
+
+  /* ---------- 圖片上傳 ---------- */
+  let onPick = null;
+  function pick(cb) { onPick = cb; $('file').value = ''; $('file').click(); }
+  $('file').onchange = async () => {
+    const f = $('file').files[0]; if (!f || !onPick) return;
+    if (f.size > 5 * 1024 * 1024) return say('圖片超過 5MB，先縮小再上傳。', 'err');
+    say('上傳中…');
+    const name = `${Date.now()}-${f.name.replace(/[^\w.\-]+/g, '_')}`;
+    const { error } = await sb.storage.from(C.BUCKET).upload(name, f, { cacheControl: '31536000', upsert: false });
+    if (error) return say('上傳失敗：' + error.message, 'err');
+    const url = sb.storage.from(C.BUCKET).getPublicUrl(name).data.publicUrl;
+    onPick(url); say('圖片已上傳', 'ok');
+  };
+  $('cup').onclick = () => pick(url => { F.cover.value = url; $('cpv').style.backgroundImage = `url('${url}')`; mark(true); });
+
+  /* ---------- 存檔／刪除 ---------- */
+  const autoSlug = () => { const d = new Date(), p = n => String(n).padStart(2, '0'); return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${Math.random().toString(36).slice(2, 6)}`; };
+  async function save() {
+    const title = F.title.value.trim(); if (!title) { F.title.focus(); return say('先寫標題。', 'err'); }
+    let slug = F.slug.value.trim().toLowerCase().replace(/[^a-z0-9\-]+/g, '-').replace(/^-+|-+$/g, '') || autoSlug();
+    F.slug.value = slug;
+    const row = { title, slug, excerpt: F.ex.value.trim() || null, cover_url: F.cover.value.trim() || null,
+      tags: F.tags.value.split(/[,，、]/).map(s => s.trim()).filter(Boolean), body: F.md.value,
+      published: pub, published_at: new Date(F.at.value || Date.now()).toISOString() };
+    $('save').disabled = true; say('存檔中…');
+    const q = cur?.id ? sb.from('articles').update(row).eq('id', cur.id).select().single() : sb.from('articles').insert(row).select().single();
+    const { data, error } = await q; $('save').disabled = false;
+    if (error) return say(/duplicate|unique/i.test(error.message) ? '這個網址代稱已經有文章用了，換一個。' : '存檔失敗：' + error.message, 'err');
+    try { localStorage.removeItem('suhao-draft-' + (cur?.id || 'new')); } catch (_) {}
+    cur = data; $('view').href = C.articleUrl(slug); $('del').style.visibility = 'visible';
+    mark(false); say(pub ? (new Date(row.published_at) > Date.now() ? '已存檔，會在排定的時間發布' : '已存檔並發布') : '草稿已存檔', 'ok');
+    await load();
+  }
+  $('save').onclick = save;
+  addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') { e.preventDefault(); save(); } });
+
+  // 不用 confirm()：按一次變紅，再按一次才真的刪
+  let delArm = 0;
+  $('del').onclick = async () => {
+    if (!cur?.id) return;
+    if (Date.now() - delArm > 3000) { delArm = Date.now(); $('del').textContent = '再按一次確認刪除'; setTimeout(() => $('del').textContent = '刪除', 3000); return; }
+    const { error } = await sb.from('articles').delete().eq('id', cur.id);
+    if (error) return say('刪除失敗：' + error.message, 'err');
+    $('del').textContent = '刪除'; fill(null); say('已刪除', 'ok'); await load(); $('app').classList.remove('editing');
+  };
+  function sure(text) { return new Promise(res => { say(text); const y = document.createElement('button'); y.className = 'mini'; y.textContent = '確定'; y.style.marginLeft = '10px';
+    y.onclick = () => { dirty = false; res(true); say(''); }; $('msg').appendChild(y); setTimeout(() => res(false), 8000); }); }
+  addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  await load(); fill(null);
+  if (all.length && innerWidth > 900) open(all[0].id); else $('app').classList.remove('editing');
+})();
+</script>
+</body>
+</html>
