@@ -60,8 +60,7 @@ footer.site .row{display:flex;flex-wrap:wrap;gap:10px 26px;margin-bottom:16px;co
 .logo .ch b.g{clip-path:inset(0 0 58% 0)}
 .logo .ch b.g1{top:-.82em;opacity:.22}
 .logo .ch b.g2{top:-.42em;opacity:.48}
-.logo.sm{font-size:15px;padding-top:.45em;gap:.24em}
-.logo.sm .g1{display:none}
+.logo.sm{font-size:14px;gap:.26em}
 .logo.drop .ch b{animation:drop 1.8s cubic-bezier(.2,.8,.2,1) both}
 .logo.drop .ch b.g1{animation-name:dropG1}
 .logo.drop .ch b.g2{animation-name:dropG2}

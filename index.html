@@ -3,9 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>蘇昊數理｜讓抽象，被看見</title>
-<meta name="description" content="蘇昊數理：數學・理化一對一家教。數光島筆記本、見微理畫、會考模擬考、《本徵》等自製教材與網站作品常設展出。">
+<title>蘇昊數理｜數學・理化家教・讓抽象，被看見</title>
+<meta name="description" content="蘇昊數理：數學・理化一對一家教（實體／線上）。數光島筆記本、見微理畫、會考模擬考、《本徵》等自製教材與網站作品常設展出。">
 <link rel="canonical" href="https://suuuuuhaooooo.github.io/">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#fbfbf9">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="蘇昊數理">
@@ -16,8 +21,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
- {"@type":"WebSite","name":"蘇昊數理","alternateName":["蘇昊","SUHAO MATH & SCIENCE"],"url":"https://suuuuuhaooooo.github.io/"},
- {"@type":"EducationalOrganization","name":"蘇昊數理","url":"https://suuuuuhaooooo.github.io/","sameAs":["https://line.me/ti/p/~@000gwomo"]}
+ {"@type":"WebSite","@id":"https://suuuuuhaooooo.github.io/#site","name":"蘇昊數理","alternateName":["蘇昊","蘇昊數理家教","SUHAO MATH & SCIENCE"],"url":"https://suuuuuhaooooo.github.io/"},
+ {"@type":"EducationalOrganization","@id":"https://suuuuuhaooooo.github.io/#org","name":"蘇昊數理","alternateName":"蘇昊數理家教","url":"https://suuuuuhaooooo.github.io/",
+  "logo":"https://suuuuuhaooooo.github.io/icon-512.png","image":"https://suuuuuhaooooo.github.io/og-image.png",
+  "description":"數學・理化一對一家教（實體／線上），自編教材、會考模擬考、數光島筆記本、見微理畫。",
+  "founder":{"@type":"Person","name":"蘇昊"},"email":"suuuuuhaooooo@gmail.com",
+  "sameAs":["https://line.me/ti/p/~@000gwomo","https://www.threads.com/@suuuuuhaooooo"]}
 ]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,13 +76,14 @@ html.loading .entry .over{opacity:0}
 .entry .cue{position:absolute;left:0;right:0;bottom:calc(30% - 10px);text-align:center;font-size:10px;letter-spacing:.3em;color:var(--sub);display:none}
 .sayhi{font-family:var(--sans)!important;font-weight:500!important;font-size:clamp(64px,15vw,190px)!important;letter-spacing:-.02em!important;line-height:1!important}
 .exit .thanks{color:var(--sub);margin-top:20px;font-size:15px;letter-spacing:.06em}
-.hi{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--fg);margin-top:56px;text-align:left}
+.hi{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--fg);margin-top:56px;text-align:left}
 .hi a{position:relative;padding:18px 18px 22px 0;border-right:1px solid var(--line);transition:background .4s}
 .hi a:last-child{border-right:0}
 .hi a:hover{background:var(--wall)}
 .hi b{display:block;font-family:var(--serif);font-weight:500;font-size:19px;letter-spacing:.06em;margin-top:6px}
 .hi .arrow{position:absolute;right:16px;top:18px;font-style:normal}
-@media (max-width:680px){.hi{grid-template-columns:1fr 1fr}.hi a:nth-child(2){border-right:0}.hi a{border-bottom:1px solid var(--line);padding-left:4px}}
+.hi .mail b{font-family:var(--sans);font-size:14px;letter-spacing:.02em;word-break:break-all;margin-top:10px}
+@media (max-width:980px){.hi{grid-template-columns:1fr 1fr}.hi .mail{grid-column:1/-1;border-right:0}.hi a{border-right:0}.hi a:nth-child(1),.hi a:nth-child(4){border-right:1px solid var(--line)}.hi a{border-bottom:1px solid var(--line);padding-left:4px}}
 footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:var(--fg);margin-bottom:10px}
 .exit{text-align:left!important}
 
@@ -342,6 +352,7 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
     <div class="hi rv d2">
       <a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener"><span class="label">預約・問題</span><b>官方 LINE</b><i class="arrow"></i></a>
       <a href="https://www.threads.com/@suuuuuhaooooo" target="_blank" rel="noopener"><span class="label">日常</span><b>Threads</b><i class="arrow"></i></a>
+      <a href="mailto:suuuuuhaooooo@gmail.com" class="mail"><span class="label">寫信給我</span><b>suuuuuhaooooo@gmail.com</b><i class="arrow"></i></a>
       <a href="articles.html"><span class="label">讀一點東西</span><b>專欄</b><i class="arrow"></i></a>
       <a href="https://suuuuuhaooooo.bobaboba.me/" target="_blank" rel="noopener"><span class="label">喜歡這些作品</span><b>請作者喝杯咖啡</b><i class="arrow"></i></a>
     </div>
@@ -352,7 +363,7 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
   <div class="wrap">
     <div class="row">
       <a href="articles.html">專欄</a><a href="/-/profile.html">師資簡介</a><a href="/-/schedule.html">排課總表</a><a href="/-/FAQ.html">常見問題</a>
-      <a href="/-/classroom.html">雲端教室</a><a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener">官方 LINE</a><a href="/-/">舊版入口網</a>
+      <a href="/-/classroom.html">雲端教室</a><a href="https://line.me/ti/p/~@000gwomo" target="_blank" rel="noopener">官方 LINE</a><a href="mailto:suuuuuhaooooo@gmail.com">Email</a><a href="/-/">舊版入口網</a>
     </div>
     <span class="still">這個展，還在佈展中。</span>© 2026 蘇昊數理 SUHAO MATH &amp; SCIENCE
   </div>
@@ -369,6 +380,7 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/config.js"></script>
 <script src="assets/logo.js"></script>
+<script src="assets/protect.js"></script>
 <script src="assets/exhibit.js"></script>
 <script src="assets/route.js"></script>
 <script>
