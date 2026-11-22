@@ -16,8 +16,14 @@
     `<div class="foot">${pill ? `<a class="btn solid" href="${pill.getAttribute('href')}" target="_blank" rel="noopener">${pill.textContent.trim()}</a>` : ''}<p>SUHAO MATH &amp; SCIENCE</p></div>`;
   document.body.appendChild(m);
 
+  const items = [...m.querySelectorAll('nav a')];
   const set = open => {
+    // 打開時由上往下依序出現；關上時反過來由下往上收回，最後整片選單再往上收
+    items.forEach((a, i) => a.style.transitionDelay = (open ? .18 + i * .07 : (items.length - 1 - i) * .04) + 's');
+    const was = H.classList.contains('menu-open');
     H.classList.toggle('menu-open', open);
+    // 關的動畫還在跑時，讓導覽列（叉叉→三條槓）留在選單上面，不會被蓋住
+    if (was && !open) { H.classList.add('menu-closing'); clearTimeout(set.t); set.t = setTimeout(() => H.classList.remove('menu-closing'), 950); }
     btn.setAttribute('aria-expanded', open); btn.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
     m.setAttribute('aria-hidden', !open);
   };
