@@ -128,7 +128,7 @@ h1.title{font-family:var(--serif);font-weight:300;font-size:clamp(34px,6vw,58px)
   const tags = (a.tags || []).map(t => `<a href="articles.html?tag=${encodeURIComponent(t)}">${C.esc(t)}</a>`).join('');
   const mins = Math.max(1, Math.round((a.body || '').length / 500));
   root.innerHTML = `<article>
-    <div class="meta"><span>${C.date(a.published_at)}</span>${tags}<span>約 ${mins} 分鐘</span>${a.published ? '' : '<span style="color:#b3261e">草稿（只有你看得到）</span>'}</div>
+    <div class="meta"><span>${C.date(a.published_at)}</span>${tags}<span>約 ${mins} 分鐘</span><span id="viewsTxt"></span>${a.published ? '' : '<span style="color:#b3261e">草稿（只有你看得到）</span>'}</div>
     <h1 class="title">${C.esc(a.title)}</h1>
     ${a.excerpt ? `<p class="lede">${C.esc(a.excerpt)}</p>` : ''}
     ${a.cover_url ? `<div class="cover" style="background-image:url('${C.esc(a.cover_url)}')"></div>` : ''}
@@ -142,6 +142,23 @@ h1.title{font-family:var(--serif);font-weight:300;font-size:clamp(34px,6vw,58px)
   </article>`;
   window.renderArticle(document.getElementById('body'), a.body || '');
   document.querySelectorAll('.logo[data-text]').forEach(el => window.suhaoLogo && window.suhaoLogo(el));
+
+  // 瀏覽人次：同一台瀏覽器同一次造訪（sessionStorage）同一篇只算一次，避免重新整理灌水；
+  // 數字真正加 1 是在資料庫那端的 bump_article_views() 函式裡做，前端沒辦法直接竄改。
+  (async () => {
+    const el = document.getElementById('viewsTxt');
+    if (!el || !C.sb || !a.published) return;
+    const key = 'v_' + a.slug;
+    let n = a.views;
+    if (!sessionStorage.getItem(key)) {
+      try {
+        const { data, error } = await C.sb.rpc('bump_article_views', { p_slug: a.slug });
+        if (!error && typeof data === 'number') n = data;
+        sessionStorage.setItem(key, '1');
+      } catch (_) {}
+    }
+    if (typeof n === 'number') el.textContent = `瀏覽 ${n} 次`;
+  })();
 
   document.getElementById('share').onclick = async e => {
     try { await navigator.clipboard.writeText(location.href); e.target.textContent = '已複製'; }
