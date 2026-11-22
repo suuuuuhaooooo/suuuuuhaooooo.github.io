@@ -36,7 +36,7 @@
 <style>
 
 
-/* ---------- 開場：四格輪流亮 → 放大 → 左右切開 ---------- */
+/* ---------- 開場：四格輪流亮 → 放大到全白 ---------- */
 html.loading,html.loading body{overflow:hidden}
 #loader{position:fixed;inset:0;z-index:200;cursor:pointer;--s:8px}
 #loader .half{position:absolute;top:0;bottom:0;background:#0b0b0b;transition:transform 1.2s cubic-bezier(.76,0,.24,1)}
@@ -52,9 +52,8 @@ html.loading,html.loading body{overflow:hidden}
 #loader.grow{--s:34px}
 #loader.grow .q{background:#fbfbf9}
 #loader.grow .skip{opacity:0}
-#loader.open .half.l{transform:translateX(-101%)}
-#loader.open .half.r{transform:translateX(101%)}
-#loader.open{pointer-events:none}
+#loader.full .q{transition:background .2s,width 1s cubic-bezier(.7,0,.2,1),height 1s cubic-bezier(.7,0,.2,1),top 1s cubic-bezier(.7,0,.2,1)}
+#loader.out{opacity:0;pointer-events:none;transition:opacity .6s ease}
 html.loading .entry .over{opacity:0}
 .entry .over{transition:opacity 1.4s ease .3s}
 
@@ -213,7 +212,7 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
 </div>
 <script>
 /* 開場：四格小正方形，白光照「右上 → 右下 → 左下 → 左上」一直繞，
-   等字型和圖片真的載完，四格一起亮、放大，再左右切開 */
+   等字型和圖片真的載完，四格一起亮、放大，一路放大到整個畫面變白，再淡出露出網站 */
 (function () {
   var L = document.getElementById('loader'), H = document.documentElement,
       Q = ['qTR', 'qBR', 'qBL', 'qTL'].map(function (id) { return document.getElementById(id); }),
@@ -234,8 +233,13 @@ footer.site .still{display:block;font-family:var(--serif);font-size:14px;letter-
     if (ended) return; ended = true; clearTimeout(timer);
     Q.forEach(function (q) { q.classList.add('on'); });
     L.classList.add('grow');
-    setTimeout(function () { L.classList.add('open'); H.classList.remove('loading'); H.classList.add('ready'); }, again ? 450 : 850);
-    setTimeout(function () { L.remove(); }, again ? 1700 : 2150);
+    // 第二段：繼續放大到蓋滿整個畫面（全白），再淡出露出網站
+    setTimeout(function () {
+      L.classList.add('full');
+      L.style.setProperty('--s', Math.ceil(Math.max(innerWidth, innerHeight) * .75) + 'px');
+    }, again ? 350 : 800);
+    setTimeout(function () { L.classList.add('out'); H.classList.remove('loading'); H.classList.add('ready'); }, again ? 1250 : 1850);
+    setTimeout(function () { L.remove(); }, again ? 1900 : 2500);
   }
   L.addEventListener('click', function () { loaded = fonts = 1; MIN = 0; finish(); });
   setTimeout(function () { loaded = fonts = 1; }, 7000);
