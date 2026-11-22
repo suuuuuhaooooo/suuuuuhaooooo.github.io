@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /admin-works.html
 
 Sitemap: https://suuuuuhaooooo.github.io/sitemap.xml

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>展品｜後台｜蘇昊數理</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta name="theme-color" content="#fbfbf9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+body{background:var(--wall)}
+.nav .brand{margin-right:0}
+.nav .who{font-size:12px;color:var(--sub);letter-spacing:.06em}
+.adm-tabs{display:flex;gap:20px;font-size:13px;letter-spacing:.14em;margin-right:auto;margin-left:28px}
+.adm-tabs a{color:var(--sub);padding-bottom:3px;border-bottom:1px solid transparent}.adm-tabs a.on{color:var(--fg);border-bottom-color:var(--fg)}
+@media (max-width:640px){.nav .who{display:none}.adm-tabs{margin-left:14px;gap:14px}}
+.gate{min-height:100vh;display:grid;place-items:center;padding:24px}
+.gate .box{background:#fff;padding:44px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 30px 60px -30px rgba(0,0,0,.3)}
+.gate h1{font-family:var(--serif);font-weight:300;font-size:28px;letter-spacing:.12em}
+.gate p{color:var(--sub);font-size:13px;margin:8px 0 26px}
+.gbtn{width:100%;height:50px;border:1px solid #cfcec8;background:#fff;font-size:15px;letter-spacing:.08em}
+
+.app{display:none;grid-template-columns:340px 1fr;min-height:100vh;padding-top:calc(60px + env(safe-area-inset-top))}
+.app.on{display:grid}
+.side{border-right:1px solid var(--line);background:var(--bg)}
+.side .top{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.side .top span{font-size:11px;letter-spacing:.24em;color:var(--sub)}
+.newbtn{height:34px;padding:0 14px;background:var(--fg);color:#fff;font-size:12px;letter-spacing:.16em}
+.item{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;padding:12px 14px 12px 18px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s}
+.item:hover{background:#f4f3ef}.item.on{background:#efede8}
+.item .th{width:54px;height:40px;background:#e6e4de center/cover no-repeat;border:1px solid #d8d6cf}
+.item b{display:block;font-family:var(--serif);font-weight:500;font-size:15px}
+.item small{font-size:11px;color:var(--sub);letter-spacing:.08em}
+.item.off{opacity:.45}
+.mv{display:flex;flex-direction:column}
+.mv button{width:28px;height:22px;font-size:12px;color:#777}
+.mv button:hover{color:var(--fg);background:#e6e4de}
+
+.ed{padding:28px clamp(18px,3vw,44px) 120px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+.ed .field input,.ed .field textarea{background:#fff;border:1px solid #dcdad3;padding:0 12px;font:inherit;font-size:15px;color:var(--fg);outline:none;width:100%}
+.ed .field input{height:44px}
+.ed .field textarea{padding:10px 12px;line-height:1.8;resize:vertical}
+.ed .field input:focus,.ed .field textarea:focus{border-color:var(--fg)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.count{font-size:11px;color:var(--sub);text-align:right;margin-top:4px}
+.count.warn{color:#b3261e}
+.imgbox{display:flex;gap:10px}
+.imgbox input{flex:1}
+.mini{height:44px;padding:0 14px;border:1px solid #cfcec8;background:#fff;font-size:12px;letter-spacing:.12em;white-space:nowrap}
+.mini:hover{border-color:var(--fg)}
+.toggle{display:flex;border:1px solid var(--fg);height:44px}
+.toggle button{flex:1;font-size:13px;letter-spacing:.14em}.toggle button.on{background:var(--fg);color:#fff}
+details{margin-top:18px;font-size:13px;color:var(--sub)}
+details textarea{font-family:ui-monospace,Menlo,monospace!important;font-size:12px!important;min-height:140px}
+.hint{font-size:12px;color:var(--sub);margin-top:6px;line-height:1.7}
+
+/* 右邊：牆上的樣子 */
+.wall{position:sticky;top:90px;background:#ecebe6;padding:34px 28px 40px;display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap;box-shadow:inset 0 -40px 60px -40px rgba(0,0,0,.08)}
+.wall .lab{font-size:11px;letter-spacing:.24em;color:var(--sub);width:100%;margin-bottom:-8px}
+.pframe{background:#151515;padding:6px;box-shadow:0 20px 30px -14px rgba(0,0,0,.35);flex:1 1 220px;max-width:340px}
+.pframe .mat{background:#fbfbf9;padding:22px}
+.pframe .art{aspect-ratio:1;background:#e6e3dc center/contain no-repeat}
+.pframe .art svg{width:100%;height:100%;display:block}
+.plate{background:#fff;width:170px;padding:14px 16px;font-size:11px;line-height:1.6;box-shadow:0 6px 12px -8px rgba(0,0,0,.3)}
+.plate .n{color:var(--sub);letter-spacing:.14em}
+.plate h4{font-family:var(--serif);font-weight:500;font-size:15px;margin:4px 0 2px}
+.plate i{font-style:normal;color:var(--sub);display:block}
+.plate p{color:#333;margin-top:6px}
+.bottom{position:fixed;left:340px;right:0;bottom:0;background:rgba(251,251,249,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px clamp(18px,3vw,44px) calc(12px + env(safe-area-inset-bottom));display:flex;gap:12px;align-items:center;z-index:20}
+.bottom .msg{margin:0;flex:1}
+.bottom .btn{height:44px;padding:0 22px}
+.del{color:#b3261e;font-size:12px;letter-spacing:.14em}
+.empty{padding:60px 20px;text-align:center;color:var(--sub);font-family:var(--serif)}
+.back{display:none;font-size:12px;letter-spacing:.14em;color:var(--sub);margin-bottom:6px}
+@media (max-width:980px){
+  .app{grid-template-columns:1fr}.side{border-right:0}
+  .ed{grid-template-columns:1fr;gap:26px}.wall{position:static}
+  .app.editing .side{display:none}.app:not(.editing) .ed,.app:not(.editing) .bottom{display:none}
+  .bottom{left:0}.back{display:inline-block}.row2{grid-template-columns:1fr;gap:0}
+}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="./" aria-label="蘇昊數理 首頁"><span class="logo sm" data-text="蘇昊數理"></span></a>
+  <span class="adm-tabs"><a href="admin.html">專欄文章</a><a href="admin-works.html" class="on">展品</a></span>
+  <span class="who" id="who"></span>
+  <button class="pill" id="out" style="display:none">登出</button>
+</div></nav>
+
+<div class="gate" id="gate"><div class="box">
+  <h1>展品後台</h1><p id="gmsg">用管理員的 Google 帳號登入。</p>
+  <button class="gbtn" id="gin">使用 Google 登入</button>
+</div></div>
+
+<div class="app" id="app">
+  <aside class="side">
+    <div class="top"><span>展間 I・依序掛在走廊上</span><button class="newbtn" id="new">＋ 新展品</button></div>
+    <div id="list"></div>
+  </aside>
+  <main class="ed">
+    <div>
+      <button class="back" id="back">← 展品列表</button>
+      <label class="field"><span>作品名稱</span><input id="f-t" placeholder="例如：數光島筆記本"></label>
+      <div class="row2">
+        <label class="field"><span>媒材</span><input id="f-m" placeholder="網站　HTML、SVG"></label>
+        <div class="field"><span>展出</span><div class="toggle" id="f-on"><button data-v="1">展出中</button><button data-v="0">先收起來</button></div></div>
+      </div>
+      <label class="field"><span>說明</span><textarea id="f-d" rows="4" placeholder="兩三句話說這件作品是什麼"></textarea></label>
+      <div class="count" id="cnt"></div>
+      <div class="row2">
+        <label class="field"><span>按鈕文字</span><input id="f-b" placeholder="前往"></label>
+        <label class="field"><span>按鈕連結（空白＝沒有按鈕）</span><input id="f-u" placeholder="/math-Illustration/ 或 https://…"></label>
+      </div>
+      <div class="field"><span>作品圖（網站截圖、照片）</span>
+        <div class="imgbox"><input id="f-img" placeholder="貼圖片網址，或按右邊上傳"><button class="mini" id="up" type="button">上傳</button></div>
+        <p class="hint">橫的、直的都可以，畫框會照圖片比例。沒有圖片時會用下面的 SVG。</p>
+      </div>
+      <details><summary>進階：用 SVG 畫（沒有圖片時才用）</summary>
+        <div class="row2"><label class="field"><span>寬</span><input id="f-w" type="number" value="300"></label><label class="field"><span>高</span><input id="f-h" type="number" value="300"></label></div>
+        <label class="field"><span>SVG 內容（不含外層 &lt;svg&gt;）</span><textarea id="f-svg" rows="6"></textarea></label>
+      </details>
+    </div>
+    <div class="wall">
+      <span class="lab">牆上的樣子</span>
+      <div class="pframe"><div class="mat"><div class="art" id="pa"></div></div></div>
+      <div class="plate"><span class="n" id="pn">No. 01</span><h4 id="pt">作品名稱</h4><i id="pm">媒材</i><p id="pd">說明</p></div>
+    </div>
+  </main>
+  <div class="bottom">
+    <button class="del" id="del">刪除</button>
+    <div class="msg" id="msg"></div>
+    <a class="btn" href="./#room1" target="_blank" rel="noopener">看展廳</a>
+    <button class="btn solid" id="save">存檔</button>
+  </div>
+</div>
+<input type="file" id="file" accept="image/*" hidden>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
+<script src="assets/logo.js"></script>
+<script>
+(async function () {
+  const C = window.SUHAO, sb = C.sb, $ = id => document.getElementById(id), esc = C.esc;
+  const say = (t, k) => { $('msg').textContent = t; $('msg').className = 'msg ' + (k || ''); };
+  if (!sb) { $('gmsg').textContent = 'Supabase 還沒設定（assets/config.js）。'; return; }
+  $('gin').onclick = () => sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href.split('#')[0] } });
+  $('out').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return;
+  $('who').textContent = session.user.email; $('out').style.display = '';
+  const { data: ok } = await sb.rpc('is_site_admin');
+  if (!ok) { $('gmsg').innerHTML = `<b>${esc(session.user.email)}</b><br>這個帳號沒有管理權限。`; $('gin').style.display = 'none'; return; }
+  $('gate').style.display = 'none'; $('app').classList.add('on');
+
+  const F = { t: $('f-t'), m: $('f-m'), d: $('f-d'), b: $('f-b'), u: $('f-u'), img: $('f-img'), w: $('f-w'), h: $('f-h'), svg: $('f-svg') };
+  let all = [], cur = null, on = true, dirty = false;
+  const setOn = v => { on = v; $('f-on').querySelectorAll('button').forEach(b => b.classList.toggle('on', (b.dataset.v === '1') === v)); };
+  $('f-on').onclick = e => { const b = e.target.closest('button'); if (b) { setOn(b.dataset.v === '1'); dirty = true; } };
+
+  async function load() {
+    const { data, error } = await sb.from('works').select('*').order('sort');
+    if (error) return say('讀取失敗：' + error.message + '（是不是還沒執行 SQL？）', 'err');
+    all = data; draw();
+  }
+  const thumb = w => w.image_url ? `background-image:url('${esc(w.image_url)}')` : '';
+  function draw() {
+    $('list').innerHTML = all.length ? all.map((w, i) => `<div class="item${cur && cur.id === w.id ? ' on' : ''}${w.active ? '' : ' off'}" data-id="${w.id}">
+      <span class="th" style="${thumb(w)}"></span><div><b>${esc(w.title)}</b><small>No. ${String(i + 1).padStart(2, '0')}${w.active ? '' : '・收起來了'}</small></div>
+      <span class="mv"><button data-mv="-1" title="往前">▲</button><button data-mv="1" title="往後">▼</button></span></div>`).join('') : '<div class="empty">還沒有展品</div>';
+  }
+  $('list').onclick = async e => {
+    const it = e.target.closest('.item'); if (!it) return;
+    const mv = e.target.closest('[data-mv]');
+    if (mv) { e.stopPropagation(); return move(it.dataset.id, +mv.dataset.mv); }
+    open(all.find(w => w.id === it.dataset.id));
+  };
+  async function move(id, d) {
+    const i = all.findIndex(w => w.id === id), j = i + d; if (j < 0 || j >= all.length) return;
+    [all[i], all[j]] = [all[j], all[i]];
+    draw(); say('調整順序中…');
+    const res = await Promise.all(all.map((w, k) => sb.from('works').update({ sort: (k + 1) * 10 }).eq('id', w.id)));
+    const bad = res.find(r => r.error); say(bad ? '順序存檔失敗：' + bad.error.message : '順序已更新', bad ? 'err' : 'ok');
+  }
+
+  function open(w) {
+    cur = w || null;
+    F.t.value = w?.title || ''; F.m.value = w?.medium || ''; F.d.value = w?.description || ''; F.b.value = w?.button || '';
+    F.u.value = w?.url || ''; F.img.value = w?.image_url || ''; F.svg.value = w?.svg || ''; F.w.value = w?.width || 300; F.h.value = w?.height || 300;
+    setOn(w ? w.active : true); $('del').style.visibility = w ? 'visible' : 'hidden';
+    dirty = false; say(''); preview(); draw(); $('app').classList.add('editing');
+  }
+  function preview() {
+    const i = cur ? all.indexOf(cur) : all.length;
+    $('pn').textContent = 'No. ' + String(i + 1).padStart(2, '0');
+    $('pt').textContent = F.t.value || '作品名稱'; $('pm').textContent = F.m.value || '媒材'; $('pd').textContent = F.d.value || '說明';
+    const a = $('pa');
+    if (F.img.value) { a.innerHTML = ''; a.style.backgroundImage = `url('${F.img.value}')`; a.style.aspectRatio = ''; const im = new Image(); im.onload = () => a.style.aspectRatio = im.naturalWidth + '/' + im.naturalHeight; im.src = F.img.value; }
+    else { a.style.backgroundImage = ''; a.style.aspectRatio = (F.w.value || 300) + '/' + (F.h.value || 300); a.innerHTML = F.svg.value ? `<svg viewBox="0 0 ${+F.w.value || 300} ${+F.h.value || 300}">${F.svg.value}</svg>` : ''; }
+    const n = F.d.value.length; $('cnt').textContent = n + ' 字' + (n > 70 ? '　牆上的卡片大概只放得下 70 字，超過的會被切掉（點開說明卡還是看得到全文）' : ''); $('cnt').className = 'count' + (n > 70 ? ' warn' : '');
+  }
+  Object.values(F).forEach(el => el.addEventListener('input', () => { dirty = true; preview(); }));
+
+  $('file').onchange = async () => {
+    const f = $('file').files[0]; if (!f) return;
+    if (f.size > 5 * 1024 * 1024) return say('圖片超過 5MB，先縮小再上傳。', 'err');
+    say('上傳中…');
+    const name = `works/${Date.now()}-${f.name.replace(/[^\w.\-]+/g, '_')}`;
+    const { error } = await sb.storage.from(C.BUCKET).upload(name, f, { cacheControl: '31536000' });
+    if (error) return say('上傳失敗：' + error.message, 'err');
+    F.img.value = sb.storage.from(C.BUCKET).getPublicUrl(name).data.publicUrl; dirty = true; preview(); say('圖片已上傳，記得存檔', 'ok');
+  };
+  $('up').onclick = () => { $('file').value = ''; $('file').click(); };
+
+  $('save').onclick = async () => {
+    if (!F.t.value.trim()) { F.t.focus(); return say('先寫作品名稱。', 'err'); }
+    const row = { title: F.t.value.trim(), medium: F.m.value.trim() || null, description: F.d.value.trim() || null,
+      button: F.b.value.trim() || '前往', url: F.u.value.trim() || null, image_url: F.img.value.trim() || null,
+      svg: F.svg.value.trim() || null, width: +F.w.value || 300, height: +F.h.value || 300, active: on, updated_at: new Date().toISOString() };
+    if (!cur) row.sort = (all.length + 1) * 10;
+    $('save').disabled = true; say('存檔中…');
+    const q = cur ? sb.from('works').update(row).eq('id', cur.id).select().single() : sb.from('works').insert(row).select().single();
+    const { data, error } = await q; $('save').disabled = false;
+    if (error) return say('存檔失敗：' + error.message, 'err');
+    dirty = false; await load(); open(all.find(w => w.id === data.id)); say('已存檔，重新整理首頁就看得到', 'ok');
+  };
+  let arm = 0;
+  $('del').onclick = async () => {
+    if (!cur) return;
+    if (Date.now() - arm > 3000) { arm = Date.now(); $('del').textContent = '再按一次確認刪除'; setTimeout(() => $('del').textContent = '刪除', 3000); return; }
+    const { error } = await sb.from('works').delete().eq('id', cur.id);
+    if (error) return say('刪除失敗：' + error.message, 'err');
+    $('del').textContent = '刪除'; cur = null; await load(); $('app').classList.remove('editing'); say('已刪除', 'ok');
+  };
+  $('new').onclick = () => open(null);
+  $('back').onclick = () => $('app').classList.remove('editing');
+  addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  await load();
+  if (all.length && innerWidth > 980) open(all[0]); else $('app').classList.remove('editing');
+})();
+</script>
+</body>
+</html>

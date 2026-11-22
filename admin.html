@@ -18,6 +18,9 @@
 <style>
 body{background:var(--wall)}
 .nav .who{font-size:12px;color:var(--sub);letter-spacing:.06em}
+.adm-tabs{display:flex;gap:20px;font-size:13px;letter-spacing:.14em;margin-right:auto;margin-left:28px}
+.adm-tabs a{color:var(--sub);padding-bottom:3px;border-bottom:1px solid transparent}.adm-tabs a.on{color:var(--fg);border-bottom-color:var(--fg)}
+@media (max-width:640px){.nav .who{display:none}.adm-tabs{margin-left:14px;gap:14px}}
 .gate{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:24px}
 .gate .box{background:#fff;padding:44px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 30px 60px -30px rgba(0,0,0,.3)}
 .gate .logo{font-size:26px;margin-bottom:22px}
@@ -97,7 +100,8 @@ body{background:var(--wall)}
 </head>
 <body>
 <nav class="nav"><div class="wrap">
-  <a class="brand" href="./" aria-label="蘇昊數理 首頁"><span class="logo sm" data-text="蘇昊數理"></span></a>
+  <a class="brand" href="./" aria-label="蘇昊數理 首頁" style="margin-right:0"><span class="logo sm" data-text="蘇昊數理"></span></a>
+  <span class="adm-tabs"><a href="admin.html" class="on">專欄文章</a><a href="admin-works.html">展品</a></span>
   <span class="who" id="who"></span>
   <button class="pill" id="out" style="display:none">登出</button>
 </div></nav>
